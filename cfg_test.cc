@@ -153,13 +153,45 @@ void showTreeCode(tree t)
   }
 }
 
+void countOcurrencesOfConstantZero(tree t, tree lhs, tree rhs1, tree rhs2, tree rhs3){
+  if(integer_zerop(lhs))
+    ft[47]++;
+  if (integer_zerop(t)) 
+    ft[47]++;
+  if(integer_zerop(rhs1))
+    ft[47]++;
+  if(rhs2 && integer_zerop(rhs2))
+    ft[47]++;
+  if(rhs3 && integer_zerop(rhs3))
+    ft[47]++;
+}
+
+void countOcurrencesOfConstantOne(tree t, tree lhs, tree rhs1, tree rhs2, tree rhs3){
+  if(integer_onep(lhs))
+    ft[49]++;
+  if (integer_onep(t)) 
+    ft[49]++;
+  if(integer_onep(rhs1))
+    ft[49]++;
+  if(rhs2 && integer_onep(rhs2))
+    ft[49]++;
+  if(rhs3 && integer_onep(rhs3))
+    ft[49]++;
+}
+
 void checkTreeCode(gimple *stmt)
 {
   tree t = gimple_assign_rhs_to_tree(stmt);
-
+  tree lhs = gimple_assign_lhs(stmt);
+  tree rhs1 = gimple_assign_rhs1(stmt);
+  tree rhs2 = gimple_assign_rhs2(stmt);
+  tree rhs3 = gimple_assign_rhs3(stmt);
   fprintf(stderr, "C TREE_CODE_CLASS: %s\n", TREE_CODE_CLASS_STRING(TREE_CODE_CLASS(TREE_CODE(t))));
   fprintf(stderr, "C TREE_TYPE: %s\n", get_tree_code_name(TREE_CODE(TREE_TYPE(t))));
   fprintf(stderr, "C TREE_CODE: %s\n", get_tree_code_name(TREE_CODE(t)));
+
+  countOcurrencesOfConstantZero(t, lhs, rhs1, rhs2, rhs3);
+  countOcurrencesOfConstantOne(t, lhs, rhs1, rhs2, rhs3);
 
   if (TREE_CODE_CLASS(TREE_CODE(t)) == tcc_binary)
   {
@@ -167,11 +199,11 @@ void checkTreeCode(gimple *stmt)
       ft[23]++;
     if (TREE_CODE(TREE_TYPE(t)) == REAL_TYPE)
       ft[24]++;
-    tree rhs1 = gimple_assign_rhs1(stmt);
-    tree rhs2 = gimple_assign_rhs2(stmt);
-    tree rhs3 = gimple_assign_rhs3(stmt);
+
     if (TREE_CODE(rhs1) == INTEGER_CST || (rhs2 && TREE_CODE(rhs2) == INTEGER_CST) || (rhs3 && TREE_CODE(rhs3) == INTEGER_CST))
+    {
       ft[42]++;
+    }
   }
 }
 

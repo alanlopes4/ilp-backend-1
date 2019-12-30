@@ -6,6 +6,8 @@ int testing_pointers ()
     int *a;
     int b = 3;
     a = &b;
+    int c = 0;
+    int d = 1 + 0;
 }
 
 int testing_phi (int a)
