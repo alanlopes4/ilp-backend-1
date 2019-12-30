@@ -20,6 +20,7 @@
 #include "gimple-pretty-print.h"
 #include "gimple-iterator.h"
 #include "gimple-walk.h"
+#include "cfgexpand.h"
 
 #define INDENT(SPACE)           \
   do                            \
@@ -62,17 +63,18 @@ void print_gimple_seq_custom(FILE *file, gimple_seq seq, int spc, dump_flags_t f
 
 //###################################################################################################
 const int MAX_FT = 56;
-int ft[MAX_FT]; //Armazena todas as features de acordo com a tabela
-int number_of_instructions_by_block = 0;
-int number_of_phiNodes_by_block = 0;
+float ft[MAX_FT]; //Armazena todas as features de acordo com a tabela
+float number_of_instructions_by_block = 0;
+float number_of_phiNodes_by_block = 0;
 
 void show()
 {
 
   for (int i = 1; i < MAX_FT; i++)
   {
-    std::cerr << "FT " << i << " = " << ft[i] << "\n";
+    std::cerr << "FT" << i << " = " << ft[i] << "| ";
   }
+  std::cerr << "\n";
 }
 
 //Mostra a localiaçao da istrução encontrada
@@ -89,13 +91,15 @@ void showLocale(gimple *g)
 
 void showTreeCode(tree t)
 {
-  fprintf(stderr, "TREE_CODE: %s\n", get_tree_code_name(TREE_CODE(t)));
+  //fprintf(stderr, "TREE_CODE: %s\n", get_tree_code_name(TREE_CODE(t)));
+  fprintf(stderr, "TREE_TYPE: %s\n", get_tree_code_name(TREE_CODE(TREE_TYPE(t))));
+
   fprintf(stderr, "TREE_CODE_CLASS: %s\n", TREE_CODE_CLASS_STRING(TREE_CODE_CLASS(TREE_CODE(t))));
   // Deliberately similar to the code in tree-cfg.c
 
   switch (TREE_CODE(t))
   {
-  case FIX_TRUNC_EXPR:
+  case FIX_TRUNC_EXPR: //Operações unárias
   case FLOAT_EXPR:
   case NEGATE_EXPR:
   case ABS_EXPR:
@@ -110,15 +114,12 @@ void showTreeCode(tree t)
   case VEC_UNPACK_LO_EXPR:
   case VEC_UNPACK_FLOAT_HI_EXPR:
   case VEC_UNPACK_FLOAT_LO_EXPR:
+    fprintf(stderr, "UNARY\n");
     ft[35]++;
     break;
-  case VAR_DECL:
-    fprintf(stderr, "VAR_DECL\n");
 
-    break;
   case ARRAY_TYPE:
     fprintf(stderr, "ARRAY_TYPE\n");
-
     break;
   case COMPONENT_REF:
     fprintf(stderr, "COMPONENT_REF\n");
@@ -138,6 +139,11 @@ void showTreeCode(tree t)
   case COND_EXPR:
     fprintf(stderr, "COND_EXPR\n");
     break;
+  case VAR_DECL:
+    fprintf(stderr, "TREE_TYPE: %s\n", get_tree_code_name(TREE_CODE(TREE_TYPE(t))));
+
+    fprintf(stderr, "VAR_DECL\n");
+    break;
 
   default:
   {
@@ -146,27 +152,50 @@ void showTreeCode(tree t)
   }
   }
 }
-static inline bool
-two_succ_p (const_basic_block bb)
+
+void checkTreeCode(gimple *stmt)
 {
-	return EDGE_COUNT (bb->succs) == 2;
+  tree t = gimple_assign_rhs_to_tree(stmt);
+
+  fprintf(stderr, "C TREE_CODE_CLASS: %s\n", TREE_CODE_CLASS_STRING(TREE_CODE_CLASS(TREE_CODE(t))));
+  fprintf(stderr, "C TREE_TYPE: %s\n", get_tree_code_name(TREE_CODE(TREE_TYPE(t))));
+  fprintf(stderr, "C TREE_CODE: %s\n", get_tree_code_name(TREE_CODE(t)));
+
+  if (TREE_CODE_CLASS(TREE_CODE(t)) == tcc_binary)
+  {
+    if (TREE_CODE(TREE_TYPE(t)) == INTEGER_TYPE)
+      ft[23]++;
+    if (TREE_CODE(TREE_TYPE(t)) == REAL_TYPE)
+      ft[24]++;
+    tree rhs1 = gimple_assign_rhs1(stmt);
+    tree rhs2 = gimple_assign_rhs2(stmt);
+    tree rhs3 = gimple_assign_rhs3(stmt);
+    if (TREE_CODE(rhs1) == INTEGER_CST || (rhs2 && TREE_CODE(rhs2) == INTEGER_CST) || (rhs3 && TREE_CODE(rhs3) == INTEGER_CST))
+      ft[42]++;
+  }
 }
 
 static inline bool
-more_two_succ_p (const_basic_block bb)
+two_succ_p(const_basic_block bb)
 {
-	return EDGE_COUNT (bb->succs) > 2;
-}
-static inline bool
-two_pred_p (const_basic_block bb)
-{
-	return EDGE_COUNT (bb->succs) == 2;
+  return EDGE_COUNT(bb->succs) == 2;
 }
 
 static inline bool
-more_two_pred_p (const_basic_block bb)
+more_two_succ_p(const_basic_block bb)
 {
-	return EDGE_COUNT (bb->succs) > 2;
+  return EDGE_COUNT(bb->succs) > 2;
+}
+static inline bool
+two_pred_p(const_basic_block bb)
+{
+  return EDGE_COUNT(bb->preds) == 2;
+}
+
+static inline bool
+more_two_pred_p(const_basic_block bb)
+{
+  return EDGE_COUNT(bb->preds) > 2;
 }
 
 //Chega a quantidade de predecessores e sucessores
@@ -195,32 +224,26 @@ void checkPredAndSuccess(basic_block bb)
     ft[11]++;
   if (more_two_pred_p(bb) && more_two_succ_p(bb))
     ft[12]++;
-  /*vec<edge, va_gc> *preds = bb->preds; //armazena os predecessores do bloco
-  vec<edge, va_gc> *succs = bb->succs; //armazena os sucessores do bloco
-  //Capturando as 12 primeiras features #####################################
-  if (single_succ_p(bb))
-    ft[2]++;
-  if (succs->length() == 2)
-    ft[3]++;
-  if (succs->length() > 2)
-    ft[4]++;
-  if (single_pred_p(bb))
-    ft[5]++;
-  if (preds->length() == 2)
-    ft[6]++;
-  if (preds->length() > 2)
-    ft[7]++;
-  if (succs->length() == 1 && preds->length() == 1)
-    ft[8]++;
-  if (succs->length() == 2 && preds->length() == 1)
-    ft[9]++;
-  if (succs->length() == 1 && preds->length() == 2)
-    ft[10]++;
-  if (succs->length() == 2 && preds->length() == 2)
-    ft[11]++;
-  if (succs->length() > 2 && preds->length() > 2)
-    ft[12]++;*/
-  //Fim das 12 primeiras features #####################################
+}
+
+void countEdgesByBlock(basic_block bb)
+{
+  edge e;
+  edge_iterator ei;
+  //control flow-graph
+  FOR_EACH_EDGE(e, ei, bb->succs)
+  {
+    basic_block dest = e->dest;
+    ft[16]++; //ft[16+=EDGE_COUNT (bb->succs);
+    if (EDGE_CRITICAL_P(e) != 0)
+    {
+      ft[17]++;
+    }
+    if (e->flags & EDGE_ABNORMAL)
+    {
+      ft[18]++;
+    }
+  }
 }
 
 void countInstructionsByBlock()
@@ -247,11 +270,28 @@ void countPhiNodesByBlock(basic_block bb)
 
   if (phi_nodes(bb) == NULL)
     ft[29]++;
-  if (number_of_phiNodes_by_block >= 0 && number_of_phiNodes_by_block <= 3)
+  if (number_of_phiNodes_by_block > 0 && number_of_phiNodes_by_block <= 3)
     ft[30]++;
   else if (number_of_phiNodes_by_block > 3)
     ft[31]++;
   number_of_phiNodes_by_block = 0;
+}
+
+void calculateAverageNumberInstructionsByBlock()
+{
+  ft[26] = ft[25] / ft[1];
+}
+
+void checkPointer(gimple *g)
+{
+  tree lhsop = gimple_assign_lhs(g);
+  tree rhsop1 = gimple_assign_rhs1(g);
+  tree rhsop2 = gimple_assign_rhs2(g);
+  tree rhsop3 = gimple_assign_rhs3(g);
+  if ((lhsop && POINTER_TYPE_P(TREE_TYPE(lhsop))) || (rhsop1 && POINTER_TYPE_P(TREE_TYPE(rhsop1))) || (rhsop2 && POINTER_TYPE_P(TREE_TYPE(rhsop2))) || (rhsop3 && POINTER_TYPE_P(TREE_TYPE(rhsop3))))
+    ft[38]++;
+  if ((lhsop && FUNCTION_POINTER_TYPE_P(TREE_TYPE(lhsop))) || (rhsop1 && FUNCTION_POINTER_TYPE_P(TREE_TYPE(rhsop1))) || (rhsop2 && FUNCTION_POINTER_TYPE_P(TREE_TYPE(rhsop2))) || (rhsop3 && FUNCTION_POINTER_TYPE_P(TREE_TYPE(rhsop3))))
+    ft[39]++;
 }
 
 namespace
@@ -280,7 +320,6 @@ struct my_first_pass : gimple_opt_pass
   {
 
     std::cerr << "MÉTODO: '" << function_name(fun) << "\n";
-    ft[1]++; //incrementa a ft1
 
     basic_block bb;
     struct walk_stmt_info walk_stmt_info;
@@ -289,6 +328,8 @@ struct my_first_pass : gimple_opt_pass
 
     fprintf(stderr, "Nº de basico blocks por método: %d\n", n_basic_blocks_for_fn(fun));
     fprintf(stderr, "Nº de edges por método: %d\n", n_edges_for_fn(fun));
+
+    ft[1] = n_basic_blocks_for_fn(fun);
 
     //ITERAÇÃO PELA QUANTIDADE DE BLOCOS BÁSICOS
     FOR_EACH_BB_FN(bb, fun)
@@ -302,7 +343,7 @@ struct my_first_pass : gimple_opt_pass
       {
         gimple *stmt = gsi_stmt(gsi);
         ft[25]++;
-        //showLocale(stmt);
+        number_of_instructions_by_block++;
         //walk_gimple_op(stmt, callback_op, &walk_stmt_info);
 
         showLocale(stmt); //mosra informações sobre a linha
@@ -353,19 +394,27 @@ struct my_first_pass : gimple_opt_pass
         case GIMPLE_ASSIGN: //Atribuição GIMPLE_LABEL
         {
 
-          fprintf(stderr, "ASSIGN\n");
-          fprintf(stderr, "Num operandos: %d\n", gimple_num_ops(stmt));
-
+          //fprintf(stderr, "ASSIGN\n");
+          //fprintf(stderr, "Num operandos: %d\n", gimple_num_ops(stmt));
+          //tree lhs = gimple_assign_lhs(stmt);
+          //showTreeCode(lhs);
+          //tree rhs = gimple_assign_rhs_to_tree (stmt);
+          //showTreeCode(rhs);
+          checkPointer(stmt);
+          checkTreeCode(stmt);
           tree rhs1 = gimple_assign_rhs1(stmt);
-          showTreeCode(rhs1);
+          if (TREE_CODE(rhs1) == INTEGER_CST)
+            ft[41]++;
+          if (get_gimple_rhs_class(gimple_assign_rhs_code(stmt)) == GIMPLE_UNARY_RHS)
+            ft[35]++;
+          if (get_gimple_rhs_class(gimple_assign_rhs_code(stmt)) == GIMPLE_BINARY_RHS)
+          {
+            //checkTreeCode(stmt);
+          }
+          if (get_gimple_rhs_class(gimple_assign_rhs_code(stmt)) == GIMPLE_SINGLE_RHS)
+          {
+          }
 
-          tree rhs2 = gimple_assign_rhs2(stmt);
-          if (rhs2 != NULL)
-            showTreeCode(rhs2);
-
-          tree rhs3 = gimple_assign_rhs3(stmt);
-          if (rhs3 != NULL)
-            showTreeCode(rhs3);
           //walk_gimple_op(stmt, callback_op, &walk_stmt_info);
 
           ft[21]++;
@@ -377,27 +426,11 @@ struct my_first_pass : gimple_opt_pass
         }
       }
 
-      edge e;
-      edge_iterator ei;
-      //control flow-graph
-      FOR_EACH_EDGE(e, ei, bb->succs)
-      {
-        basic_block dest = e->dest;
-        ft[16]++; //ft[16+=EDGE_COUNT (bb->succs);
-        if (EDGE_CRITICAL_P(e) != 0)
-        {
-          ft[17]++;
-        }
-        if (e->flags & EDGE_ABNORMAL)
-        {
-          ft[18]++;
-        }
-      }
-
+      countEdgesByBlock(bb);
       countInstructionsByBlock();
       countPhiNodesByBlock(bb);
     }
-
+    calculateAverageNumberInstructionsByBlock();
     show();
     // Nothing special todo
     return 0;
