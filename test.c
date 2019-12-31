@@ -106,4 +106,7 @@ void quicksort_iterative (int arr[], int l, int h)
             stack[ ++top ] = h;
         }
     }
+
+    static int *p;
+
 }

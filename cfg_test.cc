@@ -62,7 +62,7 @@ void print_gimple_seq_custom(FILE *file, gimple_seq seq, int spc, dump_flags_t f
 }
 
 //###################################################################################################
-const int MAX_FT = 56;
+const int MAX_FT = 57;
 float ft[MAX_FT]; //Armazena todas as features de acordo com a tabela
 float number_of_instructions_by_block = 0;
 float number_of_phiNodes_by_block = 0;
@@ -118,7 +118,7 @@ void showTreeCode(tree t)
   case VEC_UNPACK_FLOAT_HI_EXPR:
   case VEC_UNPACK_FLOAT_LO_EXPR:
     fprintf(stderr, "UNARY\n");
-    ft[35]++;
+    //ft[35]++;
     break;
 
   case ARRAY_TYPE:
@@ -292,6 +292,30 @@ void countEdgesByBlock(basic_block bb)
     {
       ft[18]++;
     }
+  }
+}
+
+void countLocalVariable(function *fun)
+{
+  int i;
+  tree var;
+  FOR_EACH_LOCAL_DECL(fun, i, var)
+  {
+    ft[51]++;
+    tree type = TREE_TYPE(var);
+    enum tree_code code = TREE_CODE(type);
+    if (TREE_STATIC(var) != 0 || DECL_EXTERNAL(var) != 0)
+    {
+      ft[52]++;
+      if (code == POINTER_TYPE)
+        ft[56]++;
+    }
+
+    if (code == POINTER_TYPE)
+      ft[55]++;
+
+    if(REFERENCE_CLASS_P(var) != 0)
+      ft[53]++;
   }
 }
 
@@ -509,6 +533,7 @@ struct my_first_pass : gimple_opt_pass
     }
     calculateAverageNumberInstructionsByBlock();
     calculateAverageArgumentsForPhiNode();
+    countLocalVariable(fun);
 
     show();
     // Nothing special todo
