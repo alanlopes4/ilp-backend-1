@@ -94,7 +94,7 @@ void showLocale(gimple *g)
 
 void showTreeCode(tree t)
 {
-  //fprintf(stderr, "TREE_CODE: %s\n", get_tree_code_name(TREE_CODE(t)));
+  fprintf(stderr, "TREE_CODE: %s\n", get_tree_code_name(TREE_CODE(t)));
   fprintf(stderr, "TREE_TYPE: %s\n", get_tree_code_name(TREE_CODE(TREE_TYPE(t))));
 
   fprintf(stderr, "TREE_CODE_CLASS: %s\n", TREE_CODE_CLASS_STRING(TREE_CODE_CLASS(TREE_CODE(t))));
@@ -194,6 +194,13 @@ void checkTreeCode(gimple *stmt)
   fprintf(stderr, "C TREE_CODE_CLASS: %s\n", TREE_CODE_CLASS_STRING(TREE_CODE_CLASS(TREE_CODE(t))));
   fprintf(stderr, "C TREE_TYPE: %s\n", get_tree_code_name(TREE_CODE(TREE_TYPE(t))));
   fprintf(stderr, "C TREE_CODE: %s\n", get_tree_code_name(TREE_CODE(t)));
+  if (TREE_CODE(t) == INTEGER_CST)
+  {
+    if (TYPE_MAIN_VARIANT(TREE_TYPE(t)) == long_integer_type_node || TYPE_MAIN_VARIANT(TREE_TYPE(lhs)) == long_integer_type_node)
+      ft[50]++;
+    if (TYPE_MAIN_VARIANT(TREE_TYPE(t)) == integer_type_node || TYPE_MAIN_VARIANT(TREE_TYPE(lhs)) == integer_type_node)
+      ft[48]++;
+  }
 
   countOcurrencesOfConstantZero(t, lhs, rhs1, rhs2, rhs3);
   countOcurrencesOfConstantOne(t, lhs, rhs1, rhs2, rhs3);
@@ -209,6 +216,11 @@ void checkTreeCode(gimple *stmt)
     {
       ft[42]++;
     }
+  }
+  else if (TREE_CODE_CLASS(TREE_CODE(t)) == tcc_unary)
+  {
+    if (TREE_CODE(t) == INDIRECT_REF)
+      ft[37]++;
   }
 }
 
@@ -393,7 +405,6 @@ struct my_first_pass : gimple_opt_pass
         ft[25]++;
         number_of_instructions_by_block++;
         showLocale(stmt); //mosra informações sobre a linha
-
         switch (gimple_code(stmt))
         {
         case GIMPLE_PHI:
@@ -411,6 +422,11 @@ struct my_first_pass : gimple_opt_pass
         {
           ft[19]++;
           const gcall *call_stmt = as_a<const gcall *>(stmt);
+          // tree fndecl = gimple_call_fndecl(call_stmt);
+          //fprintf(stderr, "FNDECL TREE_CODE_CLASS: %s\n", TREE_CODE_CLASS_STRING(TREE_CODE_CLASS(TREE_CODE(fndecl))));
+          //fprintf(stderr, "FNDECL TREE_TYPE: %s\n", get_tree_code_name(TREE_CODE(TREE_TYPE(fndecl))));
+          //fprintf(stderr, "FNDECL TREE_CODE: %s\n", get_tree_code_name(TREE_CODE(fndecl)));
+
           if (TREE_CODE(gimple_call_return_type(call_stmt)) == POINTER_TYPE)
             ft[46]++;
           if (TREE_CODE(gimple_call_return_type(call_stmt)) == INTEGER_TYPE)

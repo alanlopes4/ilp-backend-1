@@ -4,15 +4,16 @@
 int testing_pointers ()
 {
     int *a;
-    int b = 3;
+    int b = a;
     a = &b;
-    int c = 0;
+    long c = 0;
     int d = 1 + 0;
 }
 
 int testing_phi (int a)
 {
     int x;
+    long y = 12;
     x = -a * 3;
     if (a > 0)
         x = 1;

@@ -34,7 +34,7 @@
 [x] ft34 Number of switch instructions in the method
 [x] ft35 Number of unary operations in the method
 [ ] ft36 Number of instruction that do pointer arithmetic in the method
-[ ] ft37 Number of indirect references via pointers ("*" in C)
+[0] ft37 Number of indirect references via pointers ("*" in C)
 [x] ft38 Number of times the address of a variables is taken ("&" in C)
 [x] ft39 Number of times the address of a function is taken ("&" in C)
 [ ] ft40 Number of indirect calls (i.e. done via pointers) in the method
@@ -45,9 +45,9 @@
 [x] ft45 Number of calls that return a pointer
 [x] ft46 Number of calls that return an integer
 [x] ft47 Number of occurrences of integer constant zero
-[ ] ft48 Number of occurrences of 32-bit integer constants
+[x] ft48 Number of occurrences of 32-bit integer constants
 [x] ft49 Number of occurrences of integer constant one
-[ ] ft50 Number of occurrences of 64-bit integer constants
+[x] ft50 Number of occurrences of 64-bit integer constants
 [ ] ft51 Number of references of local variables in the method
 [ ] ft52 Number of references (def/use) of static/extern variables in the method
 [ ] ft53 Number of local variables referred in the method
