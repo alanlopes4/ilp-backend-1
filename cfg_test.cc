@@ -66,6 +66,9 @@ const int MAX_FT = 56;
 float ft[MAX_FT]; //Armazena todas as features de acordo com a tabela
 float number_of_instructions_by_block = 0;
 float number_of_phiNodes_by_block = 0;
+bool arguments_phi_nodes_is_greather_5 = false;
+bool arguments_phi_nodes_is_interval_1_to_5 = false;
+float sum_arguments_for_phi_nodes = 0;
 
 void show()
 {
@@ -298,17 +301,30 @@ void countPhiNodesByBlock(basic_block bb)
   for (pi = gsi_start_phis(bb); !gsi_end_p(pi); gsi_next(&pi))
   {
     gphi *phi = pi.phi();
-    fprintf(stderr, "PHI\n");
-    print_gimple_stmt(dump_file, phi, 0, TDF_SLIM);
   }
 
   if (phi_nodes(bb) == NULL)
     ft[29]++;
-  if (number_of_phiNodes_by_block > 0 && number_of_phiNodes_by_block <= 3)
-    ft[30]++;
-  else if (number_of_phiNodes_by_block > 3)
-    ft[31]++;
+  else
+  {
+    if (number_of_phiNodes_by_block > 0 && number_of_phiNodes_by_block <= 3)
+      ft[30]++;
+    else if (number_of_phiNodes_by_block > 3)
+      ft[31]++;
+  }
+
+  if (arguments_phi_nodes_is_greather_5)
+    ft[32]++;
+  if (arguments_phi_nodes_is_interval_1_to_5)
+    ft[33]++;
+
   number_of_phiNodes_by_block = 0;
+}
+
+void calculateAverageArgumentsForPhiNode()
+{
+  ft[28] = sum_arguments_for_phi_nodes / (ft[30] + ft[31]);
+  sum_arguments_for_phi_nodes = 0;
 }
 
 void calculateAverageNumberInstructionsByBlock()
@@ -356,10 +372,6 @@ struct my_first_pass : gimple_opt_pass
     std::cerr << "MÉTODO: '" << function_name(fun) << "\n";
 
     basic_block bb;
-    struct walk_stmt_info walk_stmt_info;
-    //memset(&walk_stmt_info, 0, sizeof(walk_stmt_info));
-    //walk_gimple_seq(fun->gimple_body, callback_stmt, callback_op, &walk_stmt_info);
-
     fprintf(stderr, "Nº de basico blocks por método: %d\n", n_basic_blocks_for_fn(fun));
     fprintf(stderr, "Nº de edges por método: %d\n", n_edges_for_fn(fun));
 
@@ -370,6 +382,8 @@ struct my_first_pass : gimple_opt_pass
     {
 
       gimple_stmt_iterator gsi;
+      arguments_phi_nodes_is_greather_5 = false;
+      arguments_phi_nodes_is_interval_1_to_5 = false;
       checkPredAndSuccess(bb);
 
       //LOOP que passa por cada instrução dentro de um bloco
@@ -378,23 +392,19 @@ struct my_first_pass : gimple_opt_pass
         gimple *stmt = gsi_stmt(gsi);
         ft[25]++;
         number_of_instructions_by_block++;
-        //walk_gimple_op(stmt, callback_op, &walk_stmt_info);
-
         showLocale(stmt); //mosra informações sobre a linha
 
         switch (gimple_code(stmt))
         {
-        case GIMPLE_OMP_FOR: //
-        {
-          break;
-        }
-        case GIMPLE_ASM: //GIMPLE_ASM
-        {
-          break;
-        }
         case GIMPLE_PHI:
         {
           number_of_phiNodes_by_block++;
+          int num_args = gimple_phi_num_args(stmt);
+          sum_arguments_for_phi_nodes += num_args;
+          if (num_args > 5)
+            arguments_phi_nodes_is_greather_5 = true;
+          if (num_args >= 1 && num_args <= 5)
+            arguments_phi_nodes_is_interval_1_to_5 = true;
           break;
         }
         case GIMPLE_CALL: //Chamada de função
@@ -482,6 +492,8 @@ struct my_first_pass : gimple_opt_pass
       countPhiNodesByBlock(bb);
     }
     calculateAverageNumberInstructionsByBlock();
+    calculateAverageArgumentsForPhiNode();
+
     show();
     // Nothing special todo
     return 0;

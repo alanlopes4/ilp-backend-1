@@ -25,12 +25,12 @@
 [x] ft25 Number of instructions in the method
 [x] ft26 Average of number of instructions in basic blocks
 [ ] ft27 Average of number of phi-nodes at the beginning of a basic block
-[ ] ft28 Average of arguments for a phi-node
+[0] ft28 Average of arguments for a phi-node
 [x] ft29 Number of basic blocks with no phi nodes
 [x] ft30 Number of basic blocks with phi nodes in the interval [0, 3]
 [x] ft31 Number of basic blocks with more than 3 phi nodes
-[ ] ft32 Number of basic block where total number of arguments for all phi-nodes is in greater than 5
-[ ] ft33 Number of basic block where total number of arguments for all phi-nodes is in the interval [1, 5]
+[x] ft32 Number of basic block where total number of arguments for all phi-nodes is in greater than 5
+[x] ft33 Number of basic block where total number of arguments for all phi-nodes is in the interval [1, 5]
 [x] ft34 Number of switch instructions in the method
 [x] ft35 Number of unary operations in the method
 [ ] ft36 Number of instruction that do pointer arithmetic in the method
