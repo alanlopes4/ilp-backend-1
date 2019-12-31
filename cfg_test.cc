@@ -153,29 +153,31 @@ void showTreeCode(tree t)
   }
 }
 
-void countOcurrencesOfConstantZero(tree t, tree lhs, tree rhs1, tree rhs2, tree rhs3){
-  if(integer_zerop(lhs))
+void countOcurrencesOfConstantZero(tree t, tree lhs, tree rhs1, tree rhs2, tree rhs3)
+{
+  if (integer_zerop(lhs))
     ft[47]++;
-  if (integer_zerop(t)) 
+  if (integer_zerop(t))
     ft[47]++;
-  if(integer_zerop(rhs1))
+  if (integer_zerop(rhs1))
     ft[47]++;
-  if(rhs2 && integer_zerop(rhs2))
+  if (rhs2 && integer_zerop(rhs2))
     ft[47]++;
-  if(rhs3 && integer_zerop(rhs3))
+  if (rhs3 && integer_zerop(rhs3))
     ft[47]++;
 }
 
-void countOcurrencesOfConstantOne(tree t, tree lhs, tree rhs1, tree rhs2, tree rhs3){
-  if(integer_onep(lhs))
+void countOcurrencesOfConstantOne(tree t, tree lhs, tree rhs1, tree rhs2, tree rhs3)
+{
+  if (integer_onep(lhs))
     ft[49]++;
-  if (integer_onep(t)) 
+  if (integer_onep(t))
     ft[49]++;
-  if(integer_onep(rhs1))
+  if (integer_onep(rhs1))
     ft[49]++;
-  if(rhs2 && integer_onep(rhs2))
+  if (rhs2 && integer_onep(rhs2))
     ft[49]++;
-  if(rhs3 && integer_onep(rhs3))
+  if (rhs3 && integer_onep(rhs3))
     ft[49]++;
 }
 
@@ -398,6 +400,23 @@ struct my_first_pass : gimple_opt_pass
         case GIMPLE_CALL: //Chamada de função
         {
           ft[19]++;
+          const gcall *call_stmt = as_a<const gcall *>(stmt);
+          if (TREE_CODE(gimple_call_return_type(call_stmt)) == POINTER_TYPE)
+            ft[46]++;
+          if (TREE_CODE(gimple_call_return_type(call_stmt)) == INTEGER_TYPE)
+            ft[45]++;
+          int num_args = gimple_call_num_args(stmt);
+          if (num_args > 4)
+            ft[44]++;
+          if (num_args > 0)
+          {
+            for (int i = 0; i < num_args; i++)
+            {
+              tree arg = gimple_call_arg(stmt, i);
+              if (TREE_CODE(TREE_TYPE(arg)) == POINTER_TYPE)
+                ft[43]++;
+            }
+          }
           break;
         }
         case GIMPLE_RETURN: //Retorno
@@ -493,50 +512,10 @@ private:
   static tree callback_op(tree *t, int *, void *data)
   {
     enum tree_code code = TREE_CODE(*t);
+    fprintf(stderr, "CC TREE_CODE_CLASS: %s\n", TREE_CODE_CLASS_STRING(TREE_CODE_CLASS(TREE_CODE(*t))));
+    fprintf(stderr, "CC TREE_TYPE: %s\n", get_tree_code_name(TREE_CODE(TREE_TYPE(*t))));
+    fprintf(stderr, "CC TREE_CODE: %s\n", get_tree_code_name(TREE_CODE(*t)));
 
-    if (code == RESULT_DECL ||
-        code == PARM_DECL ||
-        code == LABEL_DECL ||
-        code == VAR_DECL ||
-        code == FUNCTION_DECL)
-    {
-
-      // Get DECL_NAME for this declaration
-      tree id = DECL_NAME(*t);
-      tree idType = TYPE_IDENTIFIER(*t);
-
-      // print name of declaration..
-      const char *name = id ? IDENTIFIER_POINTER(id) : "<unnamed>";
-      printf("Nome declaração: %s : %s \n", get_tree_code_name(code), name);
-    }
-
-    if (BINARY_CLASS_P(*t) != 0)
-    {
-      fprintf(stderr, "BINARY OPERATION\n");
-    }
-
-    if (UNARY_CLASS_P(*t) != 0)
-    {
-      fprintf(stderr, "UNARY OPERATION\n");
-    }
-
-    switch (code)
-    {
-    case PARM_DECL:
-      fprintf(stderr, "VAR_DECL\n");
-      break;
-    case SSA_NAME:
-      fprintf(stderr, "VAR_DECL\n");
-
-      break;
-    case VAR_DECL:
-      fprintf(stderr, "VAR_DECL\n");
-      break;
-    default:
-      break;
-    }
-
-    fprintf(stderr, "   Operando: %s\n", get_tree_code_name(code));
     return NULL;
   }
 };

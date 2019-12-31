@@ -40,10 +40,10 @@
 [ ] ft40 Number of indirect calls (i.e. done via pointers) in the method
 [x] ft41 Number of assignment instructions with the left operand an integer constant in the method
 [x] ft42 Number of binary operations with one of the operands an integer constant in the method
-[ ] ft43 Number of calls with pointers as arguments
-[ ] ft44 Number of calls with the number of arguments is greater than 4
-[ ] ft45 Number of calls that return a pointer
-[ ] ft46 Number of calls that return an integer
+[x] ft43 Number of calls with pointers as arguments
+[x] ft44 Number of calls with the number of arguments is greater than 4
+[x] ft45 Number of calls that return a pointer
+[x] ft46 Number of calls that return an integer
 [x] ft47 Number of occurrences of integer constant zero
 [ ] ft48 Number of occurrences of 32-bit integer constants
 [x] ft49 Number of occurrences of integer constant one
