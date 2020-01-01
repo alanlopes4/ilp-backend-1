@@ -66,11 +66,9 @@ const int MAX_FT = 57;
 float ft[MAX_FT]; //Armazena todas as features de acordo com a tabela
 float number_of_instructions_by_block = 0;
 float number_of_phiNodes_by_block = 0;
-float number_of_phiNodes_beginning_block = 0;
 bool arguments_phi_nodes_is_greather_5 = false;
 bool arguments_phi_nodes_is_interval_1_to_5 = false;
 float sum_arguments_for_phi_nodes = 0;
-float sum_basic_blocks = 0;
 
 void show()
 {
@@ -372,12 +370,6 @@ void calculateAverageNumberInstructionsByBlock()
   ft[26] = ft[25] / ft[1];
 }
 
-void calculateAveragePhiNodesBeginningBasicBlock(){
-  ft[27] = number_of_phiNodes_beginning_block/sum_basic_blocks;
-  number_of_phiNodes_beginning_block = 0;
-  sum_basic_blocks = 0;
-}
-
 void checkPointer(gimple *g)
 {
   tree lhsop = gimple_assign_lhs(g);
@@ -431,7 +423,7 @@ struct my_first_pass : gimple_opt_pass
       arguments_phi_nodes_is_greather_5 = false;
       arguments_phi_nodes_is_interval_1_to_5 = false;
       checkPredAndSuccess(bb);
-      bool first_basic_block = true;
+
       //LOOP que passa por cada instrução dentro de um bloco
       for (gsi = gsi_start_bb(bb); !gsi_end_p(gsi); gsi_next(&gsi))
       {
@@ -443,13 +435,6 @@ struct my_first_pass : gimple_opt_pass
         {
         case GIMPLE_PHI:
         {
-
-          if (first_basic_block && bb->index == 0)
-          {
-            sum_basic_blocks++;
-            number_of_phiNodes_beginning_block++;
-          }
-
           number_of_phiNodes_by_block++;
           int num_args = gimple_phi_num_args(stmt);
           sum_arguments_for_phi_nodes += num_args;
@@ -501,10 +486,6 @@ struct my_first_pass : gimple_opt_pass
           ft[22]++;
           break;
         }
-        case GIMPLE_LABEL: //LABEL
-        {
-          break;
-        }
         case GIMPLE_SWITCH:
         {
           ft[34]++;
@@ -551,7 +532,6 @@ struct my_first_pass : gimple_opt_pass
     }
     calculateAverageNumberInstructionsByBlock();
     calculateAverageArgumentsForPhiNode();
-    calculateAveragePhiNodesBeginningBasicBlock();
     countLocalVariable(fun);
 
     show();

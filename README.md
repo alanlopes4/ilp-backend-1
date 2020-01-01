@@ -24,7 +24,7 @@
 [x] ft24 Number of binary floating point operations in the method
 [x] ft25 Number of instructions in the method
 [x] ft26 Average of number of instructions in basic blocks
-[ ] ft27 Average of number of phi-nodes at the beginning of a basic block
+[0] ft27 Average of number of phi-nodes at the beginning of a basic block
 [0] ft28 Average of arguments for a phi-node
 [x] ft29 Number of basic blocks with no phi nodes
 [x] ft30 Number of basic blocks with phi nodes in the interval [0, 3]
