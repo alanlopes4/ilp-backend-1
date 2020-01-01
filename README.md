@@ -37,7 +37,7 @@
 [x] ft37 Number of indirect references via pointers ("*" in C)
 [x] ft38 Number of times the address of a variables is taken ("&" in C)
 [x] ft39 Number of times the address of a function is taken ("&" in C)
-[ ] ft40 Number of indirect calls (i.e. done via pointers) in the method
+[0] ft40 Number of indirect calls (i.e. done via pointers) in the method
 [x] ft41 Number of assignment instructions with the left operand an integer constant in the method
 [x] ft42 Number of binary operations with one of the operands an integer constant in the method
 [x] ft43 Number of calls with pointers as arguments
@@ -50,7 +50,7 @@
 [x] ft50 Number of occurrences of 64-bit integer constants
 [x] ft51 Number of references of local variables in the method
 [x] ft52 Number of references (def/use) of static/extern variables in the method
-[ ] ft53 Number of local variables referred in the method
-[ ] ft54 Number of static/extern variables referred in the method
+[0] ft53 Number of local variables referred in the method
+[0] ft54 Number of static/extern variables referred in the method
 [x] ft55 Number of local variables that are pointers in the method
 [x] ft56 Number of static/extern variables that are pointers in the method

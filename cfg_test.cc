@@ -309,12 +309,14 @@ void countLocalVariable(function *fun)
       ft[52]++;
       if (code == POINTER_TYPE)
         ft[56]++;
+      if (REFERENCE_CLASS_P(var))
+        ft[54]++;
     }
 
     if (code == POINTER_TYPE)
       ft[55]++;
 
-    if(REFERENCE_CLASS_P(var) != 0)
+    if (REFERENCE_CLASS_P(var) != 0)
       ft[53]++;
   }
 }
@@ -446,10 +448,15 @@ struct my_first_pass : gimple_opt_pass
         {
           ft[19]++;
           const gcall *call_stmt = as_a<const gcall *>(stmt);
-          // tree fndecl = gimple_call_fndecl(call_stmt);
+          gcall *call_stmt2 = as_a<gcall *>(stmt);
+          tree fndecl = gimple_call_fndecl(call_stmt);
           //fprintf(stderr, "FNDECL TREE_CODE_CLASS: %s\n", TREE_CODE_CLASS_STRING(TREE_CODE_CLASS(TREE_CODE(fndecl))));
           //fprintf(stderr, "FNDECL TREE_TYPE: %s\n", get_tree_code_name(TREE_CODE(TREE_TYPE(fndecl))));
           //fprintf(stderr, "FNDECL TREE_CODE: %s\n", get_tree_code_name(TREE_CODE(fndecl)));
+          //fprintf(stderr, "FNDECL TREE_CODE: %s\n", CALL_EXPR_BY_DESCRIPTOR(fndecl));
+
+          if (gimple_call_by_descriptor_p(call_stmt2))
+            ft[40]++;
 
           if (TREE_CODE(gimple_call_return_type(call_stmt)) == POINTER_TYPE)
             ft[46]++;
