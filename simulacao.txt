@@ -1,0 +1,50 @@
+PROGRAMA: bmm
+rm -f plugin_alan.o plugin_alan.so
+/usr/bin/g++ -c -o plugin_alan.o -std=gnu++11 -fPIC -Wall -w -g -fno-rtti -I/usr/lib/gcc/x86_64-linux-gnu/9/plugin/include -Wno-literal-suffix plugin_alan.cc
+/usr/bin/g++  -o plugin_alan.so -shared plugin_alan.o 
+/usr/bin/gcc -fplugin=./plugin_alan.so -c -o -w -I /dev/null programas/bmm/bmm.c 
+PROGRAMA: Bubblesort
+rm -f plugin_alan.o plugin_alan.so
+/usr/bin/g++ -c -o plugin_alan.o -std=gnu++11 -fPIC -Wall -w -g -fno-rtti -I/usr/lib/gcc/x86_64-linux-gnu/9/plugin/include -Wno-literal-suffix plugin_alan.cc
+/usr/bin/g++  -o plugin_alan.so -shared plugin_alan.o 
+/usr/bin/gcc -fplugin=./plugin_alan.so -c -o -w -I /dev/null programas/Bubblesort/Bubblesort.c 
+PROGRAMA: chomp
+rm -f plugin_alan.o plugin_alan.so
+/usr/bin/g++ -c -o plugin_alan.o -std=gnu++11 -fPIC -Wall -w -g -fno-rtti -I/usr/lib/gcc/x86_64-linux-gnu/9/plugin/include -Wno-literal-suffix plugin_alan.cc
+/usr/bin/g++  -o plugin_alan.so -shared plugin_alan.o 
+/usr/bin/gcc -fplugin=./plugin_alan.so -c -o -w -I /dev/null programas/chomp/chomp.c 
+PROGRAMA: drop3
+rm -f plugin_alan.o plugin_alan.so
+/usr/bin/g++ -c -o plugin_alan.o -std=gnu++11 -fPIC -Wall -w -g -fno-rtti -I/usr/lib/gcc/x86_64-linux-gnu/9/plugin/include -Wno-literal-suffix plugin_alan.cc
+/usr/bin/g++  -o plugin_alan.so -shared plugin_alan.o 
+/usr/bin/gcc -fplugin=./plugin_alan.so -c -o -w -I /dev/null programas/drop3/drop3.c 
+PROGRAMA: dry
+rm -f plugin_alan.o plugin_alan.so
+/usr/bin/g++ -c -o plugin_alan.o -std=gnu++11 -fPIC -Wall -w -g -fno-rtti -I/usr/lib/gcc/x86_64-linux-gnu/9/plugin/include -Wno-literal-suffix plugin_alan.cc
+/usr/bin/g++  -o plugin_alan.so -shared plugin_alan.o 
+/usr/bin/gcc -fplugin=./plugin_alan.so -c -o -w -I /dev/null programas/dry/dry.c 
+PROGRAMA: md5
+rm -f plugin_alan.o plugin_alan.so
+/usr/bin/g++ -c -o plugin_alan.o -std=gnu++11 -fPIC -Wall -w -g -fno-rtti -I/usr/lib/gcc/x86_64-linux-gnu/9/plugin/include -Wno-literal-suffix plugin_alan.cc
+/usr/bin/g++  -o plugin_alan.so -shared plugin_alan.o 
+/usr/bin/gcc -fplugin=./plugin_alan.so -c -o -w -I /dev/null programas/md5/md5.c 
+PROGRAMA: flops-1
+rm -f plugin_alan.o plugin_alan.so
+/usr/bin/g++ -c -o plugin_alan.o -std=gnu++11 -fPIC -Wall -w -g -fno-rtti -I/usr/lib/gcc/x86_64-linux-gnu/9/plugin/include -Wno-literal-suffix plugin_alan.cc
+/usr/bin/g++  -o plugin_alan.so -shared plugin_alan.o 
+/usr/bin/gcc -fplugin=./plugin_alan.so -c -o -w -I /dev/null programas/flops-1/flops-1.c 
+PROGRAMA: gemm
+rm -f plugin_alan.o plugin_alan.so
+/usr/bin/g++ -c -o plugin_alan.o -std=gnu++11 -fPIC -Wall -w -g -fno-rtti -I/usr/lib/gcc/x86_64-linux-gnu/9/plugin/include -Wno-literal-suffix plugin_alan.cc
+/usr/bin/g++  -o plugin_alan.so -shared plugin_alan.o 
+/usr/bin/gcc -fplugin=./plugin_alan.so -c -o -w -Iprogramas/gemm /dev/null programas/gemm/gemm.c 
+PROGRAMA: huffbench
+rm -f plugin_alan.o plugin_alan.so
+/usr/bin/g++ -c -o plugin_alan.o -std=gnu++11 -fPIC -Wall -w -g -fno-rtti -I/usr/lib/gcc/x86_64-linux-gnu/9/plugin/include -Wno-literal-suffix plugin_alan.cc
+/usr/bin/g++  -o plugin_alan.so -shared plugin_alan.o 
+/usr/bin/gcc -fplugin=./plugin_alan.so -c -o -w -I /dev/null programas/huffbench/huffbench.c 
+PROGRAMA: lpbench
+rm -f plugin_alan.o plugin_alan.so
+/usr/bin/g++ -c -o plugin_alan.o -std=gnu++11 -fPIC -Wall -w -g -fno-rtti -I/usr/lib/gcc/x86_64-linux-gnu/9/plugin/include -Wno-literal-suffix plugin_alan.cc
+/usr/bin/g++  -o plugin_alan.so -shared plugin_alan.o 
+/usr/bin/gcc -fplugin=./plugin_alan.so -c -o -w -I /dev/null programas/lpbench/lpbench.c 
