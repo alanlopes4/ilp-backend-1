@@ -50,21 +50,25 @@ float sum_basic_blocks = 0;
 //Mostra as caracteristicas finais
 void show()
 {
+  std::cerr << "[";
   for (int i = 1; i < MAX_FT; i++)
   {
-    std::cerr << "FT" << i << " = " << ft[i] << "| ";
+    std::cerr << "(" << i << ")=" << ft[i] << "  ";
     ft_global[i] += ft[i];
   }
+  std::cerr << "]";
   std::cerr << "\n";
 }
 
 void showGlobal()
 {
-  std::cerr << "Features globais\n";
+  std::cerr << "Sum of Features\n";
+  std::cerr << "[";
   for (int i = 1; i < MAX_FT; i++)
   {
-    std::cerr << "FT" << i << " = " << ft_global[i] << " | ";
+    std::cerr << "(" << i << ")=" << ft_global[i] << "  ";
   }
+  std::cerr << "]";
   std::cerr << "\n";
 }
 
@@ -158,7 +162,6 @@ void checkTreeCode(gimple *stmt)
     if (TREE_CODE(t) == INDIRECT_REF)
       ft[37]++;
   }
-  
 }
 
 static inline bool
@@ -490,6 +493,11 @@ struct plugin_alan_pass : gimple_opt_pass
 };
 } // namespace
 
+static void showGlobalCallback(void *event_data, void *data)
+{
+  showGlobal();
+}
+
 int plugin_init(struct plugin_name_args *plugin_info,
                 struct plugin_gcc_version *version)
 {
@@ -502,6 +510,7 @@ int plugin_init(struct plugin_name_args *plugin_info,
   register_callback(plugin_info->base_name,
                     /* event */ PLUGIN_INFO,
                     /* callback */ NULL, /* user_data */ &my_gcc_plugin_info);
+  register_callback("Plugin finished", PLUGIN_FINISH, showGlobalCallback, NULL);
 
   // Register the phase right after cfg
   struct register_pass_info pass_info;
