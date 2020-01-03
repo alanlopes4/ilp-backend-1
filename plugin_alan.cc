@@ -37,7 +37,8 @@ static struct plugin_info my_gcc_plugin_info = {"1.0", "This is a very simple pl
 //###################################################################################################
 //INICIALIZANDO VARIAVEIS
 const int MAX_FT = 57;
-float ft[MAX_FT]; //Armazena todas as features de acordo com a tabela
+float ft[MAX_FT];        //Armazena todas as features de acordo com a tabela
+float ft_global[MAX_FT]; //Armazena o somatório de todas a feature do arquivo
 float number_of_instructions_by_block = 0;
 float number_of_phiNodes_by_block = 0;
 float number_of_phiNodes_beginning_block = 0;
@@ -52,6 +53,17 @@ void show()
   for (int i = 1; i < MAX_FT; i++)
   {
     std::cerr << "FT" << i << " = " << ft[i] << "| ";
+    ft_global[i] += ft[i];
+  }
+  std::cerr << "\n";
+}
+
+void showGlobal()
+{
+  std::cerr << "Features globais\n";
+  for (int i = 1; i < MAX_FT; i++)
+  {
+    std::cerr << "FT" << i << " = " << ft_global[i] << " | ";
   }
   std::cerr << "\n";
 }
@@ -275,7 +287,8 @@ void countPhiNodesByBlock(basic_block bb)
 
 void calculateAverageArgumentsForPhiNode()
 {
-  ft[28] = sum_arguments_for_phi_nodes / (ft[30] + ft[31]);
+  float sum = ft[30] + ft[31];
+  ft[28] = sum_arguments_for_phi_nodes / sum != 0 ? sum : 1;
   sum_arguments_for_phi_nodes = 0;
 }
 
@@ -286,7 +299,8 @@ void calculateAverageNumberInstructionsByBlock()
 
 void calculateAveragePhiNodesBeginningBasicBlock()
 {
-  ft[27] = number_of_phiNodes_beginning_block / sum_basic_blocks;
+  
+  ft[27] = number_of_phiNodes_beginning_block / sum_basic_blocks != 0 ? sum_basic_blocks : 1;
   number_of_phiNodes_beginning_block = 0;
   sum_basic_blocks = 0;
 }
@@ -466,13 +480,12 @@ struct plugin_alan_pass : gimple_opt_pass
     show();
     return 0;
   }
-
   virtual plugin_alan_pass *clone() override
   {
     return this;
   }
 };
-} 
+} // namespace
 
 int plugin_init(struct plugin_name_args *plugin_info,
                 struct plugin_gcc_version *version)
