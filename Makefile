@@ -1,7 +1,7 @@
 
-PLUGIN=cfg_test.so
+PLUGIN=plugin_alan.so
 SOURCES=\
-        cfg_test.cc \
+        plugin_alan.cc \
 		$(END)
 
 include ../Makefile.common
