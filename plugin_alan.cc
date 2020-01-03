@@ -141,6 +141,8 @@ void checkTreeCode(gimple *stmt)
 
   if (TREE_CODE_CLASS(TREE_CODE(t)) == tcc_binary)
   {
+    if (TREE_CODE(TREE_TYPE(t)) == POINTER_TYPE)
+      ft[36]++;
     if (TREE_CODE(TREE_TYPE(t)) == INTEGER_TYPE)
       ft[23]++;
     if (TREE_CODE(TREE_TYPE(t)) == REAL_TYPE)
@@ -151,11 +153,12 @@ void checkTreeCode(gimple *stmt)
       ft[42]++;
     }
   }
-  else if (TREE_CODE_CLASS(TREE_CODE(t)) == tcc_unary)
+  if (TREE_CODE_CLASS(TREE_CODE(t)) == tcc_unary)
   {
     if (TREE_CODE(t) == INDIRECT_REF)
       ft[37]++;
   }
+  
 }
 
 static inline bool
@@ -299,7 +302,7 @@ void calculateAverageNumberInstructionsByBlock()
 
 void calculateAveragePhiNodesBeginningBasicBlock()
 {
-  
+
   ft[27] = number_of_phiNodes_beginning_block / sum_basic_blocks != 0 ? sum_basic_blocks : 1;
   number_of_phiNodes_beginning_block = 0;
   sum_basic_blocks = 0;
