@@ -1,0 +1,1431 @@
+	.file	"chomp.c"
+	.text
+	.comm	wanted,8,8
+	.comm	game_tree,8,8
+	.comm	nrow,4,4
+	.comm	ncol,4,4
+	.globl	copy_data
+	.type	copy_data, @function
+copy_data:
+.LFB5:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$32, %rsp
+	movq	%rdi, -24(%rbp)
+	movl	ncol(%rip), %eax
+	cltq
+	salq	$2, %rax
+	movq	%rax, %rdi
+	call	malloc@PLT
+	movq	%rax, -8(%rbp)
+	movl	ncol(%rip), %eax
+	movl	%eax, -12(%rbp)
+	jmp	.L2
+.L3:
+	movl	-12(%rbp), %eax
+	cltq
+	leaq	0(,%rax,4), %rdx
+	movq	-24(%rbp), %rax
+	addq	%rdx, %rax
+	movl	-12(%rbp), %edx
+	movslq	%edx, %rdx
+	leaq	0(,%rdx,4), %rcx
+	movq	-8(%rbp), %rdx
+	addq	%rcx, %rdx
+	movl	(%rax), %eax
+	movl	%eax, (%rdx)
+.L2:
+	movl	-12(%rbp), %eax
+	leal	-1(%rax), %edx
+	movl	%edx, -12(%rbp)
+	testl	%eax, %eax
+	jne	.L3
+	movq	-8(%rbp), %rax
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE5:
+	.size	copy_data, .-copy_data
+	.globl	next_data
+	.type	next_data, @function
+next_data:
+.LFB6:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	movq	%rdi, -24(%rbp)
+	movl	$0, -8(%rbp)
+	movl	$0, -4(%rbp)
+	jmp	.L6
+.L9:
+	movl	-8(%rbp), %eax
+	cltq
+	leaq	0(,%rax,4), %rdx
+	movq	-24(%rbp), %rax
+	addq	%rdx, %rax
+	movl	(%rax), %edx
+	movl	nrow(%rip), %eax
+	cmpl	%eax, %edx
+	jne	.L7
+	movl	-8(%rbp), %eax
+	cltq
+	leaq	0(,%rax,4), %rdx
+	movq	-24(%rbp), %rax
+	addq	%rdx, %rax
+	movl	$0, (%rax)
+	addl	$1, -8(%rbp)
+	jmp	.L6
+.L7:
+	movl	-8(%rbp), %eax
+	cltq
+	leaq	0(,%rax,4), %rdx
+	movq	-24(%rbp), %rax
+	addq	%rdx, %rax
+	movl	(%rax), %edx
+	addl	$1, %edx
+	movl	%edx, (%rax)
+	movl	$1, -4(%rbp)
+.L6:
+	movl	ncol(%rip), %eax
+	cmpl	%eax, -8(%rbp)
+	je	.L8
+	cmpl	$0, -4(%rbp)
+	je	.L9
+.L8:
+	movl	-4(%rbp), %eax
+	popq	%rbp
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE6:
+	.size	next_data, .-next_data
+	.globl	melt_data
+	.type	melt_data, @function
+melt_data:
+.LFB7:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	movq	%rdi, -24(%rbp)
+	movq	%rsi, -32(%rbp)
+	movl	ncol(%rip), %eax
+	movl	%eax, -4(%rbp)
+	jmp	.L12
+.L13:
+	movl	-4(%rbp), %eax
+	cltq
+	leaq	0(,%rax,4), %rdx
+	movq	-24(%rbp), %rax
+	addq	%rdx, %rax
+	movl	(%rax), %edx
+	movl	-4(%rbp), %eax
+	cltq
+	leaq	0(,%rax,4), %rcx
+	movq	-32(%rbp), %rax
+	addq	%rcx, %rax
+	movl	(%rax), %eax
+	cmpl	%eax, %edx
+	jle	.L12
+	movl	-4(%rbp), %eax
+	cltq
+	leaq	0(,%rax,4), %rdx
+	movq	-32(%rbp), %rax
+	addq	%rdx, %rax
+	movl	-4(%rbp), %edx
+	movslq	%edx, %rdx
+	leaq	0(,%rdx,4), %rcx
+	movq	-24(%rbp), %rdx
+	addq	%rcx, %rdx
+	movl	(%rax), %eax
+	movl	%eax, (%rdx)
+.L12:
+	movl	-4(%rbp), %eax
+	leal	-1(%rax), %edx
+	movl	%edx, -4(%rbp)
+	testl	%eax, %eax
+	jne	.L13
+	nop
+	popq	%rbp
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE7:
+	.size	melt_data, .-melt_data
+	.globl	equal_data
+	.type	equal_data, @function
+equal_data:
+.LFB8:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	movq	%rdi, -24(%rbp)
+	movq	%rsi, -32(%rbp)
+	movl	ncol(%rip), %eax
+	movl	%eax, -4(%rbp)
+	nop
+.L16:
+	movl	-4(%rbp), %eax
+	leal	-1(%rax), %edx
+	movl	%edx, -4(%rbp)
+	testl	%eax, %eax
+	je	.L15
+	movl	-4(%rbp), %eax
+	cltq
+	leaq	0(,%rax,4), %rdx
+	movq	-24(%rbp), %rax
+	addq	%rdx, %rax
+	movl	(%rax), %edx
+	movl	-4(%rbp), %eax
+	cltq
+	leaq	0(,%rax,4), %rcx
+	movq	-32(%rbp), %rax
+	addq	%rcx, %rax
+	movl	(%rax), %eax
+	cmpl	%eax, %edx
+	je	.L16
+.L15:
+	movl	-4(%rbp), %eax
+	shrl	$31, %eax
+	movzbl	%al, %eax
+	popq	%rbp
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE8:
+	.size	equal_data, .-equal_data
+	.globl	valid_data
+	.type	valid_data, @function
+valid_data:
+.LFB9:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	movq	%rdi, -24(%rbp)
+	movl	$0, -4(%rbp)
+	movl	nrow(%rip), %eax
+	movl	%eax, -8(%rbp)
+	jmp	.L19
+.L22:
+	movl	-4(%rbp), %eax
+	cltq
+	leaq	0(,%rax,4), %rdx
+	movq	-24(%rbp), %rax
+	addq	%rdx, %rax
+	movl	(%rax), %eax
+	cmpl	%eax, -8(%rbp)
+	jl	.L24
+	movl	-4(%rbp), %eax
+	cltq
+	leaq	0(,%rax,4), %rdx
+	movq	-24(%rbp), %rax
+	addq	%rdx, %rax
+	movl	(%rax), %eax
+	movl	%eax, -8(%rbp)
+	addl	$1, -4(%rbp)
+.L19:
+	movl	ncol(%rip), %eax
+	cmpl	%eax, -4(%rbp)
+	jne	.L22
+	jmp	.L21
+.L24:
+	nop
+.L21:
+	movl	ncol(%rip), %eax
+	cmpl	%eax, -4(%rbp)
+	sete	%al
+	movzbl	%al, %eax
+	popq	%rbp
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE9:
+	.size	valid_data, .-valid_data
+	.globl	dump_list
+	.type	dump_list, @function
+dump_list:
+.LFB10:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$16, %rsp
+	movq	%rdi, -8(%rbp)
+	cmpq	$0, -8(%rbp)
+	je	.L27
+	movq	-8(%rbp), %rax
+	movq	8(%rax), %rax
+	movq	%rax, %rdi
+	call	dump_list
+	movq	-8(%rbp), %rax
+	movq	(%rax), %rax
+	movq	%rax, %rdi
+	call	free@PLT
+	movq	-8(%rbp), %rax
+	movq	%rax, %rdi
+	call	free@PLT
+.L27:
+	nop
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE10:
+	.size	dump_list, .-dump_list
+	.globl	dump_play
+	.type	dump_play, @function
+dump_play:
+.LFB11:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$16, %rsp
+	movq	%rdi, -8(%rbp)
+	cmpq	$0, -8(%rbp)
+	je	.L30
+	movq	-8(%rbp), %rax
+	movq	24(%rax), %rax
+	movq	%rax, %rdi
+	movl	$0, %eax
+	call	dump_play
+	movq	-8(%rbp), %rax
+	movq	16(%rax), %rax
+	movq	%rax, %rdi
+	call	dump_list
+	movq	-8(%rbp), %rax
+	movq	8(%rax), %rax
+	movq	%rax, %rdi
+	call	free@PLT
+	movq	-8(%rbp), %rax
+	movq	%rax, %rdi
+	call	free@PLT
+.L30:
+	nop
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE11:
+	.size	dump_play, .-dump_play
+	.globl	get_value
+	.type	get_value, @function
+get_value:
+.LFB12:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$24, %rsp
+	movq	%rdi, -24(%rbp)
+	movq	game_tree(%rip), %rax
+	movq	%rax, -8(%rbp)
+	jmp	.L32
+.L33:
+	movq	-8(%rbp), %rax
+	movq	24(%rax), %rax
+	movq	%rax, -8(%rbp)
+.L32:
+	movq	-8(%rbp), %rax
+	movq	8(%rax), %rax
+	movq	-24(%rbp), %rdx
+	movq	%rdx, %rsi
+	movq	%rax, %rdi
+	call	equal_data
+	testl	%eax, %eax
+	je	.L33
+	movq	-8(%rbp), %rax
+	movl	(%rax), %eax
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE12:
+	.size	get_value, .-get_value
+	.section	.rodata
+.LC0:
+	.string	"%d"
+	.text
+	.globl	show_data
+	.type	show_data, @function
+show_data:
+.LFB13:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$32, %rsp
+	movq	%rdi, -24(%rbp)
+	movl	$0, -4(%rbp)
+	jmp	.L36
+.L37:
+	movl	-4(%rbp), %eax
+	leal	1(%rax), %edx
+	movl	%edx, -4(%rbp)
+	cltq
+	leaq	0(,%rax,4), %rdx
+	movq	-24(%rbp), %rax
+	addq	%rdx, %rax
+	movl	(%rax), %eax
+	movl	%eax, %esi
+	leaq	.LC0(%rip), %rdi
+	movl	$0, %eax
+	call	printf@PLT
+	movl	ncol(%rip), %eax
+	cmpl	%eax, -4(%rbp)
+	je	.L36
+	movl	$44, %edi
+	call	putchar@PLT
+.L36:
+	movl	ncol(%rip), %eax
+	cmpl	%eax, -4(%rbp)
+	jne	.L37
+	nop
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE13:
+	.size	show_data, .-show_data
+	.section	.rodata
+.LC1:
+	.string	")"
+	.text
+	.globl	show_move
+	.type	show_move, @function
+show_move:
+.LFB14:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$16, %rsp
+	movq	%rdi, -8(%rbp)
+	movl	$40, %edi
+	call	putchar@PLT
+	movq	-8(%rbp), %rax
+	movq	%rax, %rdi
+	call	show_data
+	leaq	.LC1(%rip), %rdi
+	call	puts@PLT
+	nop
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE14:
+	.size	show_move, .-show_move
+	.globl	show_list
+	.type	show_list, @function
+show_list:
+.LFB15:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$16, %rsp
+	movq	%rdi, -8(%rbp)
+	jmp	.L40
+.L41:
+	movq	-8(%rbp), %rax
+	movq	(%rax), %rax
+	movq	%rax, %rdi
+	call	show_move
+	movq	-8(%rbp), %rax
+	movq	8(%rax), %rax
+	movq	%rax, -8(%rbp)
+.L40:
+	cmpq	$0, -8(%rbp)
+	jne	.L41
+	nop
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE15:
+	.size	show_list, .-show_list
+	.section	.rodata
+.LC2:
+	.string	"For state :"
+.LC3:
+	.string	"  value = %d\n"
+.LC4:
+	.string	"We get, in order :"
+	.text
+	.globl	show_play
+	.type	show_play, @function
+show_play:
+.LFB16:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$16, %rsp
+	movq	%rdi, -8(%rbp)
+	jmp	.L43
+.L44:
+	leaq	.LC2(%rip), %rdi
+	call	puts@PLT
+	movq	-8(%rbp), %rax
+	movq	8(%rax), %rax
+	movq	%rax, %rdi
+	call	show_data
+	movq	-8(%rbp), %rax
+	movl	(%rax), %eax
+	movl	%eax, %esi
+	leaq	.LC3(%rip), %rdi
+	movl	$0, %eax
+	call	printf@PLT
+	leaq	.LC4(%rip), %rdi
+	call	puts@PLT
+	movq	-8(%rbp), %rax
+	movq	16(%rax), %rax
+	movq	%rax, %rdi
+	call	show_list
+	movq	-8(%rbp), %rax
+	movq	24(%rax), %rax
+	movq	%rax, -8(%rbp)
+.L43:
+	cmpq	$0, -8(%rbp)
+	jne	.L44
+	nop
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE16:
+	.size	show_play, .-show_play
+	.globl	in_wanted
+	.type	in_wanted, @function
+in_wanted:
+.LFB17:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$24, %rsp
+	movq	%rdi, -24(%rbp)
+	movq	wanted(%rip), %rax
+	movq	%rax, -8(%rbp)
+	jmp	.L46
+.L49:
+	movq	-8(%rbp), %rax
+	movq	(%rax), %rax
+	movq	-24(%rbp), %rdx
+	movq	%rdx, %rsi
+	movq	%rax, %rdi
+	call	equal_data
+	testl	%eax, %eax
+	jne	.L52
+	movq	-8(%rbp), %rax
+	movq	8(%rax), %rax
+	movq	%rax, -8(%rbp)
+.L46:
+	cmpq	$0, -8(%rbp)
+	jne	.L49
+	jmp	.L48
+.L52:
+	nop
+.L48:
+	cmpq	$0, -8(%rbp)
+	jne	.L50
+	movl	$0, %eax
+	jmp	.L51
+.L50:
+	movl	$1, %eax
+.L51:
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE17:
+	.size	in_wanted, .-in_wanted
+	.globl	make_data
+	.type	make_data, @function
+make_data:
+.LFB18:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$32, %rsp
+	movl	%edi, -20(%rbp)
+	movl	%esi, -24(%rbp)
+	movl	ncol(%rip), %eax
+	cltq
+	salq	$2, %rax
+	movq	%rax, %rdi
+	call	malloc@PLT
+	movq	%rax, -8(%rbp)
+	movl	$0, -12(%rbp)
+	jmp	.L54
+.L55:
+	movl	-12(%rbp), %eax
+	cltq
+	leaq	0(,%rax,4), %rdx
+	movq	-8(%rbp), %rax
+	addq	%rax, %rdx
+	movl	nrow(%rip), %eax
+	movl	%eax, (%rdx)
+	addl	$1, -12(%rbp)
+.L54:
+	movl	-12(%rbp), %eax
+	cmpl	-24(%rbp), %eax
+	jne	.L55
+	jmp	.L56
+.L57:
+	movl	-12(%rbp), %eax
+	cltq
+	leaq	0(,%rax,4), %rdx
+	movq	-8(%rbp), %rax
+	addq	%rax, %rdx
+	movl	-20(%rbp), %eax
+	movl	%eax, (%rdx)
+	addl	$1, -12(%rbp)
+.L56:
+	movl	ncol(%rip), %eax
+	cmpl	%eax, -12(%rbp)
+	jne	.L57
+	movq	-8(%rbp), %rax
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE18:
+	.size	make_data, .-make_data
+	.globl	make_list
+	.type	make_list, @function
+make_list:
+.LFB19:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	pushq	%rbx
+	subq	$72, %rsp
+	.cfi_offset 3, -24
+	movq	%rdi, -56(%rbp)
+	movq	%rsi, -64(%rbp)
+	movq	%rdx, -72(%rbp)
+	movq	-64(%rbp), %rax
+	movl	$1, (%rax)
+	movl	$16, %edi
+	call	malloc@PLT
+	movq	%rax, -32(%rbp)
+	movq	-32(%rbp), %rax
+	movq	$0, 8(%rax)
+	movq	-32(%rbp), %rax
+	movq	%rax, -40(%rbp)
+	movl	$0, -48(%rbp)
+	jmp	.L60
+.L68:
+	movl	$0, -44(%rbp)
+	jmp	.L61
+.L67:
+	movl	-44(%rbp), %edx
+	movl	-48(%rbp), %eax
+	movl	%edx, %esi
+	movl	%eax, %edi
+	call	make_data
+	movq	%rax, -24(%rbp)
+	movq	-56(%rbp), %rdx
+	movq	-24(%rbp), %rax
+	movq	%rdx, %rsi
+	movq	%rax, %rdi
+	call	melt_data
+	movq	-56(%rbp), %rdx
+	movq	-24(%rbp), %rax
+	movq	%rdx, %rsi
+	movq	%rax, %rdi
+	call	equal_data
+	testl	%eax, %eax
+	jne	.L62
+	movl	$16, %edi
+	call	malloc@PLT
+	movq	%rax, %rdx
+	movq	-40(%rbp), %rax
+	movq	%rdx, 8(%rax)
+	movq	-40(%rbp), %rax
+	movq	8(%rax), %rbx
+	movq	-24(%rbp), %rax
+	movq	%rax, %rdi
+	movl	$0, %eax
+	call	copy_data
+	movq	%rax, (%rbx)
+	movq	-40(%rbp), %rax
+	movq	8(%rax), %rax
+	movq	$0, 8(%rax)
+	movq	-40(%rbp), %rax
+	movq	8(%rax), %rax
+	movq	%rax, -40(%rbp)
+	movq	-64(%rbp), %rax
+	movl	(%rax), %eax
+	cmpl	$1, %eax
+	jne	.L63
+	movq	-24(%rbp), %rax
+	movq	%rax, %rdi
+	call	get_value
+	movl	%eax, %edx
+	movq	-64(%rbp), %rax
+	movl	%edx, (%rax)
+.L63:
+	movq	-72(%rbp), %rax
+	movl	(%rax), %eax
+	testl	%eax, %eax
+	jne	.L65
+	movq	-64(%rbp), %rax
+	movl	(%rax), %eax
+	testl	%eax, %eax
+	jne	.L65
+	movl	ncol(%rip), %eax
+	subl	$1, %eax
+	movl	%eax, -44(%rbp)
+	movl	nrow(%rip), %eax
+	subl	$1, %eax
+	movl	%eax, -48(%rbp)
+	movq	-24(%rbp), %rax
+	movq	%rax, %rdi
+	call	in_wanted
+	testl	%eax, %eax
+	je	.L65
+	movq	-72(%rbp), %rax
+	movl	$2, (%rax)
+	jmp	.L65
+.L62:
+	cmpl	$0, -44(%rbp)
+	jne	.L66
+	movl	nrow(%rip), %eax
+	subl	$1, %eax
+	movl	%eax, -48(%rbp)
+.L66:
+	movl	ncol(%rip), %eax
+	subl	$1, %eax
+	movl	%eax, -44(%rbp)
+.L65:
+	movq	-24(%rbp), %rax
+	movq	%rax, %rdi
+	call	free@PLT
+	addl	$1, -44(%rbp)
+.L61:
+	movl	ncol(%rip), %eax
+	cmpl	%eax, -44(%rbp)
+	jne	.L67
+	addl	$1, -48(%rbp)
+.L60:
+	movl	nrow(%rip), %eax
+	cmpl	%eax, -48(%rbp)
+	jne	.L68
+	movq	-32(%rbp), %rax
+	movq	8(%rax), %rax
+	movq	%rax, -40(%rbp)
+	movq	-32(%rbp), %rax
+	movq	%rax, %rdi
+	call	free@PLT
+	cmpq	$0, -40(%rbp)
+	je	.L69
+	movq	-64(%rbp), %rax
+	movl	(%rax), %eax
+	movl	$1, %edx
+	subl	%eax, %edx
+	movq	-64(%rbp), %rax
+	movl	%edx, (%rax)
+.L69:
+	movq	-40(%rbp), %rax
+	addq	$72, %rsp
+	popq	%rbx
+	popq	%rbp
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE19:
+	.size	make_list, .-make_list
+	.globl	make_play
+	.type	make_play, @function
+make_play:
+.LFB20:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	pushq	%rbx
+	subq	$72, %rsp
+	.cfi_offset 3, -24
+	movl	%edi, -68(%rbp)
+	movq	%fs:40, %rax
+	movq	%rax, -24(%rbp)
+	xorl	%eax, %eax
+	movl	$32, %edi
+	call	malloc@PLT
+	movq	%rax, -32(%rbp)
+	movq	-32(%rbp), %rax
+	movq	%rax, -40(%rbp)
+	movq	$0, game_tree(%rip)
+	movl	$0, %esi
+	movl	$0, %edi
+	call	make_data
+	movq	%rax, -48(%rbp)
+	movq	-48(%rbp), %rax
+	movl	(%rax), %eax
+	leal	-1(%rax), %edx
+	movq	-48(%rbp), %rax
+	movl	%edx, (%rax)
+	jmp	.L72
+.L74:
+	movq	-48(%rbp), %rax
+	movq	%rax, %rdi
+	call	valid_data
+	testl	%eax, %eax
+	je	.L72
+	movl	$32, %edi
+	call	malloc@PLT
+	movq	%rax, %rdx
+	movq	-40(%rbp), %rax
+	movq	%rdx, 24(%rax)
+	movq	game_tree(%rip), %rax
+	testq	%rax, %rax
+	jne	.L73
+	movq	-40(%rbp), %rax
+	movq	24(%rax), %rax
+	movq	%rax, game_tree(%rip)
+.L73:
+	movq	-40(%rbp), %rax
+	movq	24(%rax), %rbx
+	movq	-48(%rbp), %rax
+	movq	%rax, %rdi
+	movl	$0, %eax
+	call	copy_data
+	movq	%rax, 8(%rbx)
+	movq	-40(%rbp), %rax
+	movq	24(%rax), %rbx
+	leaq	-68(%rbp), %rdx
+	leaq	-52(%rbp), %rcx
+	movq	-48(%rbp), %rax
+	movq	%rcx, %rsi
+	movq	%rax, %rdi
+	call	make_list
+	movq	%rax, 16(%rbx)
+	movq	-40(%rbp), %rax
+	movq	24(%rax), %rax
+	movl	-52(%rbp), %edx
+	movl	%edx, (%rax)
+	movq	-40(%rbp), %rax
+	movq	24(%rax), %rax
+	movq	$0, 24(%rax)
+	movq	-40(%rbp), %rax
+	movq	24(%rax), %rax
+	movq	%rax, -40(%rbp)
+	movl	-68(%rbp), %eax
+	cmpl	$2, %eax
+	jne	.L72
+	movq	-48(%rbp), %rax
+	movq	%rax, %rdi
+	call	free@PLT
+	movl	ncol(%rip), %edx
+	movl	nrow(%rip), %eax
+	movl	%edx, %esi
+	movl	%eax, %edi
+	call	make_data
+	movq	%rax, -48(%rbp)
+.L72:
+	movq	-48(%rbp), %rax
+	movq	%rax, %rdi
+	call	next_data
+	testl	%eax, %eax
+	jne	.L74
+	movq	-32(%rbp), %rax
+	movq	24(%rax), %rax
+	movq	%rax, -40(%rbp)
+	movq	-32(%rbp), %rax
+	movq	%rax, %rdi
+	call	free@PLT
+	movq	-40(%rbp), %rax
+	movq	-24(%rbp), %rcx
+	xorq	%fs:40, %rcx
+	je	.L76
+	call	__stack_chk_fail@PLT
+.L76:
+	addq	$72, %rsp
+	popq	%rbx
+	popq	%rbp
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE20:
+	.size	make_play, .-make_play
+	.globl	make_wanted
+	.type	make_wanted, @function
+make_wanted:
+.LFB21:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	pushq	%rbx
+	subq	$56, %rsp
+	.cfi_offset 3, -24
+	movq	%rdi, -56(%rbp)
+	movl	$16, %edi
+	call	malloc@PLT
+	movq	%rax, -32(%rbp)
+	movq	-32(%rbp), %rax
+	movq	$0, 8(%rax)
+	movq	-32(%rbp), %rax
+	movq	%rax, -40(%rbp)
+	movl	$0, -48(%rbp)
+	jmp	.L78
+.L84:
+	movl	$0, -44(%rbp)
+	jmp	.L79
+.L83:
+	movl	-44(%rbp), %edx
+	movl	-48(%rbp), %eax
+	movl	%edx, %esi
+	movl	%eax, %edi
+	call	make_data
+	movq	%rax, -24(%rbp)
+	movq	-56(%rbp), %rdx
+	movq	-24(%rbp), %rax
+	movq	%rdx, %rsi
+	movq	%rax, %rdi
+	call	melt_data
+	movq	-56(%rbp), %rdx
+	movq	-24(%rbp), %rax
+	movq	%rdx, %rsi
+	movq	%rax, %rdi
+	call	equal_data
+	testl	%eax, %eax
+	jne	.L80
+	movl	$16, %edi
+	call	malloc@PLT
+	movq	%rax, %rdx
+	movq	-40(%rbp), %rax
+	movq	%rdx, 8(%rax)
+	movq	-40(%rbp), %rax
+	movq	8(%rax), %rbx
+	movq	-24(%rbp), %rax
+	movq	%rax, %rdi
+	movl	$0, %eax
+	call	copy_data
+	movq	%rax, (%rbx)
+	movq	-40(%rbp), %rax
+	movq	8(%rax), %rax
+	movq	$0, 8(%rax)
+	movq	-40(%rbp), %rax
+	movq	8(%rax), %rax
+	movq	%rax, -40(%rbp)
+	jmp	.L81
+.L80:
+	cmpl	$0, -44(%rbp)
+	jne	.L82
+	movl	nrow(%rip), %eax
+	subl	$1, %eax
+	movl	%eax, -48(%rbp)
+.L82:
+	movl	ncol(%rip), %eax
+	subl	$1, %eax
+	movl	%eax, -44(%rbp)
+.L81:
+	movq	-24(%rbp), %rax
+	movq	%rax, %rdi
+	call	free@PLT
+	addl	$1, -44(%rbp)
+.L79:
+	movl	ncol(%rip), %eax
+	cmpl	%eax, -44(%rbp)
+	jne	.L83
+	addl	$1, -48(%rbp)
+.L78:
+	movl	nrow(%rip), %eax
+	cmpl	%eax, -48(%rbp)
+	jne	.L84
+	movq	-32(%rbp), %rax
+	movq	8(%rax), %rax
+	movq	%rax, -40(%rbp)
+	movq	-32(%rbp), %rax
+	movq	%rax, %rdi
+	call	free@PLT
+	movq	-40(%rbp), %rax
+	movq	%rax, wanted(%rip)
+	nop
+	addq	$56, %rsp
+	popq	%rbx
+	popq	%rbp
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE21:
+	.size	make_wanted, .-make_wanted
+	.globl	get_good_move
+	.type	get_good_move, @function
+get_good_move:
+.LFB22:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$16, %rsp
+	movq	%rdi, -8(%rbp)
+	cmpq	$0, -8(%rbp)
+	jne	.L88
+	movl	$0, %eax
+	jmp	.L87
+.L90:
+	movq	-8(%rbp), %rax
+	movq	8(%rax), %rax
+	movq	%rax, -8(%rbp)
+.L88:
+	movq	-8(%rbp), %rax
+	movq	8(%rax), %rax
+	testq	%rax, %rax
+	je	.L89
+	movq	-8(%rbp), %rax
+	movq	(%rax), %rax
+	movq	%rax, %rdi
+	call	get_value
+	testl	%eax, %eax
+	jne	.L90
+.L89:
+	movq	-8(%rbp), %rax
+	movq	(%rax), %rax
+	movq	%rax, %rdi
+	movl	$0, %eax
+	call	copy_data
+.L87:
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE22:
+	.size	get_good_move, .-get_good_move
+	.globl	get_winning_move
+	.type	get_winning_move, @function
+get_winning_move:
+.LFB23:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$32, %rsp
+	movq	%rdi, -24(%rbp)
+	jmp	.L92
+.L93:
+	movq	-24(%rbp), %rax
+	movq	24(%rax), %rax
+	movq	%rax, -24(%rbp)
+.L92:
+	movq	-24(%rbp), %rax
+	movq	24(%rax), %rax
+	testq	%rax, %rax
+	jne	.L93
+	movq	-24(%rbp), %rax
+	movq	16(%rax), %rax
+	movq	%rax, %rdi
+	call	get_good_move
+	movq	%rax, -8(%rbp)
+	movq	-8(%rbp), %rax
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE23:
+	.size	get_winning_move, .-get_winning_move
+	.globl	where
+	.type	where, @function
+where:
+.LFB24:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$16, %rsp
+	movq	%rdi, -8(%rbp)
+	movq	%rsi, -16(%rbp)
+	jmp	.L96
+.L97:
+	movq	-16(%rbp), %rax
+	movq	24(%rax), %rax
+	movq	%rax, -16(%rbp)
+.L96:
+	movq	-16(%rbp), %rax
+	movq	8(%rax), %rax
+	movq	-8(%rbp), %rdx
+	movq	%rdx, %rsi
+	movq	%rax, %rdi
+	call	equal_data
+	testl	%eax, %eax
+	je	.L97
+	movq	-16(%rbp), %rax
+	movq	16(%rax), %rax
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE24:
+	.size	where, .-where
+	.globl	get_real_move
+	.type	get_real_move, @function
+get_real_move:
+.LFB25:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	movq	%rdi, -8(%rbp)
+	movq	%rsi, -16(%rbp)
+	movq	%rdx, -24(%rbp)
+	movq	%rcx, -32(%rbp)
+	movq	-32(%rbp), %rax
+	movl	$0, (%rax)
+	jmp	.L100
+.L101:
+	movq	-32(%rbp), %rax
+	movl	(%rax), %eax
+	leal	1(%rax), %edx
+	movq	-32(%rbp), %rax
+	movl	%edx, (%rax)
+.L100:
+	movq	-32(%rbp), %rax
+	movl	(%rax), %eax
+	cltq
+	leaq	0(,%rax,4), %rdx
+	movq	-8(%rbp), %rax
+	addq	%rdx, %rax
+	movl	(%rax), %edx
+	movq	-32(%rbp), %rax
+	movl	(%rax), %eax
+	cltq
+	leaq	0(,%rax,4), %rcx
+	movq	-16(%rbp), %rax
+	addq	%rcx, %rax
+	movl	(%rax), %eax
+	cmpl	%eax, %edx
+	je	.L101
+	movq	-32(%rbp), %rax
+	movl	(%rax), %eax
+	cltq
+	leaq	0(,%rax,4), %rdx
+	movq	-8(%rbp), %rax
+	addq	%rdx, %rax
+	movl	(%rax), %edx
+	movq	-24(%rbp), %rax
+	movl	%edx, (%rax)
+	nop
+	popq	%rbp
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE25:
+	.size	get_real_move, .-get_real_move
+	.section	.rodata
+	.align 8
+.LC5:
+	.string	"Mode : 1 -> multiple first moves"
+.LC6:
+	.string	"       2 -> report game"
+.LC7:
+	.string	"       3 -> good positions"
+.LC8:
+	.string	" Selection : "
+	.align 8
+.LC9:
+	.string	"Enter number of Columns       : "
+	.align 8
+.LC10:
+	.string	"Enter Initial number of Rows : "
+	.align 8
+.LC11:
+	.string	"Enter Maximum number of Rows : "
+	.align 8
+.LC12:
+	.string	"The winning initial move for %d x %d CHOMP is (%d,%d)\n"
+.LC13:
+	.string	"Enter number of Columns : "
+.LC14:
+	.string	"Enter number of Rows    : "
+.LC15:
+	.string	"player %d plays at (%d,%d)\n"
+.LC16:
+	.string	"player %d loses\n"
+	.align 8
+.LC17:
+	.string	"ATTENTION : representation is as in a _data structure"
+	.text
+	.globl	main
+	.type	main, @function
+main:
+.LFB26:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$64, %rsp
+	movq	%fs:40, %rax
+	movq	%rax, -8(%rbp)
+	xorl	%eax, %eax
+	leaq	.LC5(%rip), %rdi
+	call	puts@PLT
+	leaq	.LC6(%rip), %rdi
+	call	puts@PLT
+	leaq	.LC7(%rip), %rdi
+	call	puts@PLT
+	leaq	.LC8(%rip), %rdi
+	movl	$0, %eax
+	call	printf@PLT
+	movl	$2, -64(%rbp)
+	movl	-64(%rbp), %eax
+	cmpl	$2, %eax
+	je	.L104
+	cmpl	$3, %eax
+	je	.L105
+	cmpl	$1, %eax
+	jne	.L103
+	leaq	.LC9(%rip), %rdi
+	movl	$0, %eax
+	call	printf@PLT
+	leaq	ncol(%rip), %rsi
+	leaq	.LC0(%rip), %rdi
+	movl	$0, %eax
+	call	__isoc99_scanf@PLT
+	leaq	.LC10(%rip), %rdi
+	movl	$0, %eax
+	call	printf@PLT
+	leaq	nrow(%rip), %rsi
+	leaq	.LC0(%rip), %rdi
+	movl	$0, %eax
+	call	__isoc99_scanf@PLT
+	leaq	.LC11(%rip), %rdi
+	movl	$0, %eax
+	call	printf@PLT
+	leaq	-56(%rbp), %rax
+	movq	%rax, %rsi
+	leaq	.LC0(%rip), %rdi
+	movl	$0, %eax
+	call	__isoc99_scanf@PLT
+	jmp	.L107
+.L108:
+	movl	ncol(%rip), %edx
+	movl	nrow(%rip), %eax
+	movl	%edx, %esi
+	movl	%eax, %edi
+	call	make_data
+	movq	%rax, %rdi
+	call	make_wanted
+	movl	$0, %edi
+	call	make_play
+	movq	%rax, -32(%rbp)
+	movq	-32(%rbp), %rax
+	movq	%rax, %rdi
+	call	get_winning_move
+	movq	%rax, -16(%rbp)
+	movl	ncol(%rip), %edx
+	movl	nrow(%rip), %eax
+	movl	%edx, %esi
+	movl	%eax, %edi
+	call	make_data
+	movq	%rax, %rsi
+	leaq	-60(%rbp), %rcx
+	leaq	-64(%rbp), %rdx
+	movq	-16(%rbp), %rax
+	movq	%rax, %rdi
+	call	get_real_move
+	movl	-60(%rbp), %esi
+	movl	-64(%rbp), %ecx
+	movl	ncol(%rip), %edx
+	movl	nrow(%rip), %eax
+	movl	%esi, %r8d
+	movl	%eax, %esi
+	leaq	.LC12(%rip), %rdi
+	movl	$0, %eax
+	call	printf@PLT
+	movq	-32(%rbp), %rax
+	movq	%rax, %rdi
+	movl	$0, %eax
+	call	dump_play
+	movq	wanted(%rip), %rax
+	movq	%rax, %rdi
+	call	dump_list
+	movl	nrow(%rip), %eax
+	addl	$1, %eax
+	movl	%eax, nrow(%rip)
+.L107:
+	movl	nrow(%rip), %edx
+	movl	-56(%rbp), %eax
+	cmpl	%eax, %edx
+	jle	.L108
+	jmp	.L103
+.L104:
+	leaq	.LC13(%rip), %rdi
+	movl	$0, %eax
+	call	printf@PLT
+	movl	$7, ncol(%rip)
+	leaq	.LC14(%rip), %rdi
+	movl	$0, %eax
+	call	printf@PLT
+	movl	$8, nrow(%rip)
+	movl	$1, %edi
+	call	make_play
+	movq	%rax, -32(%rbp)
+	movl	$0, -52(%rbp)
+	movl	ncol(%rip), %edx
+	movl	nrow(%rip), %eax
+	movl	%edx, %esi
+	movl	%eax, %edi
+	call	make_data
+	movq	%rax, -48(%rbp)
+	jmp	.L109
+.L111:
+	movq	-32(%rbp), %rdx
+	movq	-48(%rbp), %rax
+	movq	%rdx, %rsi
+	movq	%rax, %rdi
+	call	where
+	movq	%rax, %rdi
+	call	get_good_move
+	movq	%rax, -24(%rbp)
+	cmpq	$0, -24(%rbp)
+	je	.L110
+	leaq	-60(%rbp), %rcx
+	leaq	-64(%rbp), %rdx
+	movq	-48(%rbp), %rsi
+	movq	-24(%rbp), %rax
+	movq	%rax, %rdi
+	call	get_real_move
+	movl	-60(%rbp), %ecx
+	movl	-64(%rbp), %edx
+	movl	-52(%rbp), %eax
+	movl	%eax, %esi
+	leaq	.LC15(%rip), %rdi
+	movl	$0, %eax
+	call	printf@PLT
+	movl	$1, %eax
+	subl	-52(%rbp), %eax
+	movl	%eax, -52(%rbp)
+	movq	-48(%rbp), %rax
+	movq	%rax, %rdi
+	call	free@PLT
+.L110:
+	movq	-24(%rbp), %rax
+	movq	%rax, -48(%rbp)
+.L109:
+	cmpq	$0, -48(%rbp)
+	jne	.L111
+	movq	-32(%rbp), %rax
+	movq	%rax, %rdi
+	movl	$0, %eax
+	call	dump_play
+	movl	$1, %eax
+	subl	-52(%rbp), %eax
+	movl	%eax, %esi
+	leaq	.LC16(%rip), %rdi
+	movl	$0, %eax
+	call	printf@PLT
+	jmp	.L103
+.L105:
+	leaq	.LC13(%rip), %rdi
+	movl	$0, %eax
+	call	printf@PLT
+	leaq	ncol(%rip), %rsi
+	leaq	.LC0(%rip), %rdi
+	movl	$0, %eax
+	call	__isoc99_scanf@PLT
+	leaq	.LC14(%rip), %rdi
+	movl	$0, %eax
+	call	printf@PLT
+	leaq	nrow(%rip), %rsi
+	leaq	.LC0(%rip), %rdi
+	movl	$0, %eax
+	call	__isoc99_scanf@PLT
+	leaq	.LC17(%rip), %rdi
+	call	puts@PLT
+	movl	$1, %edi
+	call	make_play
+	movq	%rax, -32(%rbp)
+	movq	-32(%rbp), %rax
+	movq	%rax, -40(%rbp)
+	jmp	.L112
+.L114:
+	movq	-40(%rbp), %rax
+	movl	(%rax), %eax
+	testl	%eax, %eax
+	jne	.L113
+	movq	-40(%rbp), %rax
+	movq	8(%rax), %rax
+	movq	%rax, %rdi
+	call	show_move
+.L113:
+	movq	-40(%rbp), %rax
+	movq	24(%rax), %rax
+	movq	%rax, -40(%rbp)
+.L112:
+	cmpq	$0, -40(%rbp)
+	jne	.L114
+	movq	-32(%rbp), %rax
+	movq	%rax, %rdi
+	movl	$0, %eax
+	call	dump_play
+	nop
+.L103:
+	movl	$0, %eax
+	movq	-8(%rbp), %rcx
+	xorq	%fs:40, %rcx
+	je	.L116
+	call	__stack_chk_fail@PLT
+.L116:
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE26:
+	.size	main, .-main
+	.ident	"GCC: (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0"
+	.section	.note.GNU-stack,"",@progbits

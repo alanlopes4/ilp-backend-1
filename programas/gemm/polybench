@@ -1,0 +1,316 @@
+	.file	"polybench.c"
+	.text
+	.globl	polybench_papi_counters_threadid
+	.bss
+	.align 4
+	.type	polybench_papi_counters_threadid, @object
+	.size	polybench_papi_counters_threadid, 4
+polybench_papi_counters_threadid:
+	.zero	4
+	.globl	polybench_program_total_flops
+	.align 8
+	.type	polybench_program_total_flops, @object
+	.size	polybench_program_total_flops, 8
+polybench_program_total_flops:
+	.zero	8
+	.local	_polybench_alloc_table
+	.comm	_polybench_alloc_table,8,8
+	.local	polybench_inter_array_padding_sz
+	.comm	polybench_inter_array_padding_sz,8,8
+	.comm	polybench_t_start,8,8
+	.comm	polybench_t_end,8,8
+	.comm	polybench_c_start,8,8
+	.comm	polybench_c_end,8,8
+	.text
+	.type	rtclock, @function
+rtclock:
+.LFB5:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	pxor	%xmm0, %xmm0
+	popq	%rbp
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE5:
+	.size	rtclock, .-rtclock
+	.section	.rodata
+.LC2:
+	.string	"polybench.c"
+.LC3:
+	.string	"tmp <= 10.0"
+	.text
+	.globl	polybench_flush_cache
+	.type	polybench_flush_cache, @function
+polybench_flush_cache:
+.LFB6:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$32, %rsp
+	movl	$4194560, -20(%rbp)
+	movl	-20(%rbp), %eax
+	cltq
+	movl	$8, %esi
+	movq	%rax, %rdi
+	call	calloc@PLT
+	movq	%rax, -8(%rbp)
+	pxor	%xmm0, %xmm0
+	movsd	%xmm0, -16(%rbp)
+	movl	$0, -24(%rbp)
+	jmp	.L4
+.L5:
+	movl	-24(%rbp), %eax
+	cltq
+	leaq	0(,%rax,8), %rdx
+	movq	-8(%rbp), %rax
+	addq	%rdx, %rax
+	movsd	(%rax), %xmm0
+	movsd	-16(%rbp), %xmm1
+	addsd	%xmm1, %xmm0
+	movsd	%xmm0, -16(%rbp)
+	addl	$1, -24(%rbp)
+.L4:
+	movl	-24(%rbp), %eax
+	cmpl	-20(%rbp), %eax
+	jl	.L5
+	movsd	.LC1(%rip), %xmm0
+	ucomisd	-16(%rbp), %xmm0
+	jnb	.L6
+	leaq	__PRETTY_FUNCTION__.4933(%rip), %rcx
+	movl	$123, %edx
+	leaq	.LC2(%rip), %rsi
+	leaq	.LC3(%rip), %rdi
+	call	__assert_fail@PLT
+.L6:
+	movq	-8(%rbp), %rax
+	movq	%rax, %rdi
+	call	free@PLT
+	nop
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE6:
+	.size	polybench_flush_cache, .-polybench_flush_cache
+	.globl	polybench_prepare_instruments
+	.type	polybench_prepare_instruments, @function
+polybench_prepare_instruments:
+.LFB7:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	movl	$0, %eax
+	call	polybench_flush_cache
+	nop
+	popq	%rbp
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE7:
+	.size	polybench_prepare_instruments, .-polybench_prepare_instruments
+	.globl	polybench_timer_start
+	.type	polybench_timer_start, @function
+polybench_timer_start:
+.LFB8:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	movl	$0, %eax
+	call	polybench_prepare_instruments
+	movl	$0, %eax
+	call	rtclock
+	movq	%xmm0, %rax
+	movq	%rax, polybench_t_start(%rip)
+	nop
+	popq	%rbp
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE8:
+	.size	polybench_timer_start, .-polybench_timer_start
+	.globl	polybench_timer_stop
+	.type	polybench_timer_stop, @function
+polybench_timer_stop:
+.LFB9:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	movl	$0, %eax
+	call	rtclock
+	movq	%xmm0, %rax
+	movq	%rax, polybench_t_end(%rip)
+	nop
+	popq	%rbp
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE9:
+	.size	polybench_timer_stop, .-polybench_timer_stop
+	.section	.rodata
+.LC4:
+	.string	"%0.6f\n"
+	.text
+	.globl	polybench_timer_print
+	.type	polybench_timer_print, @function
+polybench_timer_print:
+.LFB10:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	movsd	polybench_t_end(%rip), %xmm0
+	movsd	polybench_t_start(%rip), %xmm1
+	subsd	%xmm1, %xmm0
+	leaq	.LC4(%rip), %rdi
+	movl	$1, %eax
+	call	printf@PLT
+	nop
+	popq	%rbp
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE10:
+	.size	polybench_timer_print, .-polybench_timer_print
+	.section	.rodata
+	.align 8
+.LC5:
+	.string	"[PolyBench] posix_memalign: cannot allocate memory"
+	.text
+	.type	xmalloc, @function
+xmalloc:
+.LFB11:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$48, %rsp
+	movq	%rdi, -40(%rbp)
+	movq	%fs:40, %rax
+	movq	%rax, -8(%rbp)
+	xorl	%eax, %eax
+	movq	$0, -24(%rbp)
+	movq	polybench_inter_array_padding_sz(%rip), %rax
+	movq	%rax, polybench_inter_array_padding_sz(%rip)
+	movq	polybench_inter_array_padding_sz(%rip), %rdx
+	movq	-40(%rbp), %rax
+	addq	%rdx, %rax
+	movq	%rax, -16(%rbp)
+	movq	-16(%rbp), %rdx
+	leaq	-24(%rbp), %rax
+	movl	$4096, %esi
+	movq	%rax, %rdi
+	call	posix_memalign@PLT
+	movl	%eax, -28(%rbp)
+	movq	-24(%rbp), %rax
+	testq	%rax, %rax
+	je	.L12
+	cmpl	$0, -28(%rbp)
+	je	.L13
+.L12:
+	movq	stderr(%rip), %rax
+	movq	%rax, %rcx
+	movl	$50, %edx
+	movl	$1, %esi
+	leaq	.LC5(%rip), %rdi
+	call	fwrite@PLT
+	movl	$1, %edi
+	call	exit@PLT
+.L13:
+	movq	-24(%rbp), %rax
+	movq	-8(%rbp), %rcx
+	xorq	%fs:40, %rcx
+	je	.L15
+	call	__stack_chk_fail@PLT
+.L15:
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE11:
+	.size	xmalloc, .-xmalloc
+	.globl	polybench_free_data
+	.type	polybench_free_data, @function
+polybench_free_data:
+.LFB12:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$16, %rsp
+	movq	%rdi, -8(%rbp)
+	movq	-8(%rbp), %rax
+	movq	%rax, %rdi
+	call	free@PLT
+	nop
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE12:
+	.size	polybench_free_data, .-polybench_free_data
+	.globl	polybench_alloc_data
+	.type	polybench_alloc_data, @function
+polybench_alloc_data:
+.LFB13:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$32, %rsp
+	movq	%rdi, -24(%rbp)
+	movl	%esi, -28(%rbp)
+	movq	-24(%rbp), %rax
+	movq	%rax, -16(%rbp)
+	movl	-28(%rbp), %eax
+	cltq
+	movq	-16(%rbp), %rdx
+	imulq	%rdx, %rax
+	movq	%rax, -16(%rbp)
+	movq	-16(%rbp), %rax
+	movq	%rax, %rdi
+	call	xmalloc
+	movq	%rax, -8(%rbp)
+	movq	-8(%rbp), %rax
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE13:
+	.size	polybench_alloc_data, .-polybench_alloc_data
+	.section	.rodata
+	.align 16
+	.type	__PRETTY_FUNCTION__.4933, @object
+	.size	__PRETTY_FUNCTION__.4933, 22
+__PRETTY_FUNCTION__.4933:
+	.string	"polybench_flush_cache"
+	.align 8
+.LC1:
+	.long	0
+	.long	1076101120
+	.ident	"GCC: (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0"
+	.section	.note.GNU-stack,"",@progbits

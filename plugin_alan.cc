@@ -86,9 +86,9 @@ void showLocale(gimple *g)
 
 void showTreeCode(tree t)
 {
-  fprintf(stderr, "TREE_CODE_CLASS: %s\n", TREE_CODE_CLASS_STRING(TREE_CODE_CLASS(TREE_CODE(t))));
-  fprintf(stderr, "TREE_TYPE: %s\n", get_tree_code_name(TREE_CODE(TREE_TYPE(t))));
-  fprintf(stderr, "TREE_CODE: %s\n", get_tree_code_name(TREE_CODE(t)));
+  fprintf(stderr, "CODE: %s\n", get_tree_code_name(TREE_CODE(t)));
+  fprintf(stderr, "TYPE: %s\n", get_tree_code_name(TREE_CODE(TREE_TYPE(t))));
+  fprintf(stderr, "CLASS: %s\n", TREE_CODE_CLASS_STRING(TREE_CODE_CLASS(TREE_CODE(t))));
 }
 
 void countOcurrencesOfConstantZero(tree t, tree lhs, tree rhs1, tree rhs2, tree rhs3)

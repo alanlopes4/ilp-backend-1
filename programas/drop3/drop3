@@ -1,0 +1,560 @@
+	.file	"drop3.c"
+	.text
+	.globl	drop_0xx
+	.type	drop_0xx, @function
+drop_0xx:
+.LFB5:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	movq	%rdi, -24(%rbp)
+	movq	%rsi, -32(%rbp)
+	movq	%rdx, -40(%rbp)
+	movq	-40(%rbp), %rax
+	movl	%eax, -4(%rbp)
+	movw	$0, -10(%rbp)
+	movw	$0, -12(%rbp)
+	movl	$0, -8(%rbp)
+.L19:
+	subl	$3, -4(%rbp)
+	cmpl	$0, -4(%rbp)
+	js	.L22
+	movq	-24(%rbp), %rax
+	leaq	1(%rax), %rdx
+	movq	%rdx, -24(%rbp)
+	movzbl	(%rax), %eax
+	movzbl	%al, %eax
+	sall	$8, %eax
+	movl	%eax, %edx
+	movzwl	-10(%rbp), %eax
+	orl	%edx, %eax
+	movw	%ax, -10(%rbp)
+	movzwl	-10(%rbp), %eax
+	shrw	$13, %ax
+	movb	%al, -13(%rbp)
+	cmpb	$3, -13(%rbp)
+	jbe	.L4
+	movzwl	-12(%rbp), %eax
+	sall	$3, %eax
+	movl	%eax, %edx
+	movzbl	-13(%rbp), %eax
+	orl	%edx, %eax
+	movw	%ax, -12(%rbp)
+	addl	$3, -8(%rbp)
+	movl	-8(%rbp), %eax
+	andl	$7, %eax
+	cmpl	$2, %eax
+	jg	.L4
+	movzwl	-12(%rbp), %edx
+	movl	-8(%rbp), %eax
+	andl	$7, %eax
+	movl	%eax, %ecx
+	sarl	%cl, %edx
+	movl	%edx, %ecx
+	movq	-32(%rbp), %rax
+	leaq	1(%rax), %rdx
+	movq	%rdx, -32(%rbp)
+	movl	%ecx, %edx
+	movb	%dl, (%rax)
+.L4:
+	salw	$3, -10(%rbp)
+	subl	$3, -4(%rbp)
+	cmpl	$0, -4(%rbp)
+	js	.L23
+	movzwl	-10(%rbp), %eax
+	shrw	$13, %ax
+	movb	%al, -13(%rbp)
+	cmpb	$3, -13(%rbp)
+	jbe	.L6
+	movzwl	-12(%rbp), %eax
+	sall	$3, %eax
+	movl	%eax, %edx
+	movzbl	-13(%rbp), %eax
+	orl	%edx, %eax
+	movw	%ax, -12(%rbp)
+	addl	$3, -8(%rbp)
+	movl	-8(%rbp), %eax
+	andl	$7, %eax
+	cmpl	$2, %eax
+	jg	.L6
+	movzwl	-12(%rbp), %edx
+	movl	-8(%rbp), %eax
+	andl	$7, %eax
+	movl	%eax, %ecx
+	sarl	%cl, %edx
+	movl	%edx, %ecx
+	movq	-32(%rbp), %rax
+	leaq	1(%rax), %rdx
+	movq	%rdx, -32(%rbp)
+	movl	%ecx, %edx
+	movb	%dl, (%rax)
+.L6:
+	salw	$3, -10(%rbp)
+	subl	$3, -4(%rbp)
+	cmpl	$0, -4(%rbp)
+	js	.L24
+	movq	-24(%rbp), %rax
+	leaq	1(%rax), %rdx
+	movq	%rdx, -24(%rbp)
+	movzbl	(%rax), %eax
+	movzbl	%al, %eax
+	sall	$6, %eax
+	movl	%eax, %edx
+	movzwl	-10(%rbp), %eax
+	orl	%edx, %eax
+	movw	%ax, -10(%rbp)
+	movzwl	-10(%rbp), %eax
+	shrw	$13, %ax
+	movb	%al, -13(%rbp)
+	cmpb	$3, -13(%rbp)
+	jbe	.L8
+	movzwl	-12(%rbp), %eax
+	sall	$3, %eax
+	movl	%eax, %edx
+	movzbl	-13(%rbp), %eax
+	orl	%edx, %eax
+	movw	%ax, -12(%rbp)
+	addl	$3, -8(%rbp)
+	movl	-8(%rbp), %eax
+	andl	$7, %eax
+	cmpl	$2, %eax
+	jg	.L8
+	movzwl	-12(%rbp), %edx
+	movl	-8(%rbp), %eax
+	andl	$7, %eax
+	movl	%eax, %ecx
+	sarl	%cl, %edx
+	movl	%edx, %ecx
+	movq	-32(%rbp), %rax
+	leaq	1(%rax), %rdx
+	movq	%rdx, -32(%rbp)
+	movl	%ecx, %edx
+	movb	%dl, (%rax)
+.L8:
+	salw	$3, -10(%rbp)
+	subl	$3, -4(%rbp)
+	cmpl	$0, -4(%rbp)
+	js	.L25
+	movzwl	-10(%rbp), %eax
+	shrw	$13, %ax
+	movb	%al, -13(%rbp)
+	cmpb	$3, -13(%rbp)
+	jbe	.L10
+	movzwl	-12(%rbp), %eax
+	sall	$3, %eax
+	movl	%eax, %edx
+	movzbl	-13(%rbp), %eax
+	orl	%edx, %eax
+	movw	%ax, -12(%rbp)
+	addl	$3, -8(%rbp)
+	movl	-8(%rbp), %eax
+	andl	$7, %eax
+	cmpl	$2, %eax
+	jg	.L10
+	movzwl	-12(%rbp), %edx
+	movl	-8(%rbp), %eax
+	andl	$7, %eax
+	movl	%eax, %ecx
+	sarl	%cl, %edx
+	movl	%edx, %ecx
+	movq	-32(%rbp), %rax
+	leaq	1(%rax), %rdx
+	movq	%rdx, -32(%rbp)
+	movl	%ecx, %edx
+	movb	%dl, (%rax)
+.L10:
+	salw	$3, -10(%rbp)
+	subl	$3, -4(%rbp)
+	cmpl	$0, -4(%rbp)
+	js	.L26
+	movzwl	-10(%rbp), %eax
+	shrw	$13, %ax
+	movb	%al, -13(%rbp)
+	cmpb	$3, -13(%rbp)
+	jbe	.L12
+	movzwl	-12(%rbp), %eax
+	sall	$3, %eax
+	movl	%eax, %edx
+	movzbl	-13(%rbp), %eax
+	orl	%edx, %eax
+	movw	%ax, -12(%rbp)
+	addl	$3, -8(%rbp)
+	movl	-8(%rbp), %eax
+	andl	$7, %eax
+	cmpl	$2, %eax
+	jg	.L12
+	movzwl	-12(%rbp), %edx
+	movl	-8(%rbp), %eax
+	andl	$7, %eax
+	movl	%eax, %ecx
+	sarl	%cl, %edx
+	movl	%edx, %ecx
+	movq	-32(%rbp), %rax
+	leaq	1(%rax), %rdx
+	movq	%rdx, -32(%rbp)
+	movl	%ecx, %edx
+	movb	%dl, (%rax)
+.L12:
+	salw	$3, -10(%rbp)
+	subl	$3, -4(%rbp)
+	cmpl	$0, -4(%rbp)
+	js	.L27
+	movq	-24(%rbp), %rax
+	leaq	1(%rax), %rdx
+	movq	%rdx, -24(%rbp)
+	movzbl	(%rax), %eax
+	movzbl	%al, %eax
+	sall	$7, %eax
+	movl	%eax, %edx
+	movzwl	-10(%rbp), %eax
+	orl	%edx, %eax
+	movw	%ax, -10(%rbp)
+	movzwl	-10(%rbp), %eax
+	shrw	$13, %ax
+	movb	%al, -13(%rbp)
+	cmpb	$3, -13(%rbp)
+	jbe	.L14
+	movzwl	-12(%rbp), %eax
+	sall	$3, %eax
+	movl	%eax, %edx
+	movzbl	-13(%rbp), %eax
+	orl	%edx, %eax
+	movw	%ax, -12(%rbp)
+	addl	$3, -8(%rbp)
+	movl	-8(%rbp), %eax
+	andl	$7, %eax
+	cmpl	$2, %eax
+	jg	.L14
+	movzwl	-12(%rbp), %edx
+	movl	-8(%rbp), %eax
+	andl	$7, %eax
+	movl	%eax, %ecx
+	sarl	%cl, %edx
+	movl	%edx, %ecx
+	movq	-32(%rbp), %rax
+	leaq	1(%rax), %rdx
+	movq	%rdx, -32(%rbp)
+	movl	%ecx, %edx
+	movb	%dl, (%rax)
+.L14:
+	salw	$3, -10(%rbp)
+	subl	$3, -4(%rbp)
+	cmpl	$0, -4(%rbp)
+	js	.L28
+	movzwl	-10(%rbp), %eax
+	shrw	$13, %ax
+	movb	%al, -13(%rbp)
+	cmpb	$3, -13(%rbp)
+	jbe	.L16
+	movzwl	-12(%rbp), %eax
+	sall	$3, %eax
+	movl	%eax, %edx
+	movzbl	-13(%rbp), %eax
+	orl	%edx, %eax
+	movw	%ax, -12(%rbp)
+	addl	$3, -8(%rbp)
+	movl	-8(%rbp), %eax
+	andl	$7, %eax
+	cmpl	$2, %eax
+	jg	.L16
+	movzwl	-12(%rbp), %edx
+	movl	-8(%rbp), %eax
+	andl	$7, %eax
+	movl	%eax, %ecx
+	sarl	%cl, %edx
+	movl	%edx, %ecx
+	movq	-32(%rbp), %rax
+	leaq	1(%rax), %rdx
+	movq	%rdx, -32(%rbp)
+	movl	%ecx, %edx
+	movb	%dl, (%rax)
+.L16:
+	salw	$3, -10(%rbp)
+	subl	$3, -4(%rbp)
+	cmpl	$0, -4(%rbp)
+	js	.L29
+	movzwl	-10(%rbp), %eax
+	shrw	$13, %ax
+	movb	%al, -13(%rbp)
+	cmpb	$3, -13(%rbp)
+	jbe	.L18
+	movzwl	-12(%rbp), %eax
+	sall	$3, %eax
+	movl	%eax, %edx
+	movzbl	-13(%rbp), %eax
+	orl	%edx, %eax
+	movw	%ax, -12(%rbp)
+	addl	$3, -8(%rbp)
+	movl	-8(%rbp), %eax
+	andl	$7, %eax
+	cmpl	$2, %eax
+	jg	.L18
+	movzwl	-12(%rbp), %edx
+	movl	-8(%rbp), %eax
+	andl	$7, %eax
+	movl	%eax, %ecx
+	sarl	%cl, %edx
+	movl	%edx, %ecx
+	movq	-32(%rbp), %rax
+	leaq	1(%rax), %rdx
+	movq	%rdx, -32(%rbp)
+	movl	%ecx, %edx
+	movb	%dl, (%rax)
+.L18:
+	salw	$3, -10(%rbp)
+	jmp	.L19
+.L22:
+	nop
+	jmp	.L3
+.L23:
+	nop
+	jmp	.L3
+.L24:
+	nop
+	jmp	.L3
+.L25:
+	nop
+	jmp	.L3
+.L26:
+	nop
+	jmp	.L3
+.L27:
+	nop
+	jmp	.L3
+.L28:
+	nop
+	jmp	.L3
+.L29:
+	nop
+.L3:
+	movl	-8(%rbp), %eax
+	andl	$7, %eax
+	testl	%eax, %eax
+	je	.L20
+	movzwl	-12(%rbp), %edx
+	movl	-8(%rbp), %eax
+	andl	$7, %eax
+	movl	$8, %ecx
+	subl	%eax, %ecx
+	movl	%ecx, %eax
+	movl	%eax, %ecx
+	sall	%cl, %edx
+	movl	%edx, %ecx
+	movq	-32(%rbp), %rax
+	leaq	1(%rax), %rdx
+	movq	%rdx, -32(%rbp)
+	movl	%ecx, %edx
+	movb	%dl, (%rax)
+.L20:
+	movl	-8(%rbp), %eax
+	sarl	$3, %eax
+	popq	%rbp
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE5:
+	.size	drop_0xx, .-drop_0xx
+	.type	read_data, @function
+read_data:
+.LFB6:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$16, %rsp
+	movq	%rdi, -8(%rbp)
+	movq	%rsi, -16(%rbp)
+	movq	-8(%rbp), %rdx
+	movq	-16(%rbp), %rax
+	movq	%rdx, %rcx
+	movl	$4000000, %edx
+	movl	$1, %esi
+	movq	%rax, %rdi
+	call	fread@PLT
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE6:
+	.size	read_data, .-read_data
+	.type	write_data, @function
+write_data:
+.LFB7:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$32, %rsp
+	movq	%rdi, -8(%rbp)
+	movl	%esi, -12(%rbp)
+	movq	%rdx, -24(%rbp)
+	movl	-12(%rbp), %eax
+	movslq	%eax, %rdx
+	movq	-8(%rbp), %rcx
+	movq	-24(%rbp), %rax
+	movl	$1, %esi
+	movq	%rax, %rdi
+	call	fwrite@PLT
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE7:
+	.size	write_data, .-write_data
+	.section	.rodata
+.LC0:
+	.string	"r"
+.LC1:
+	.string	"Usage: drop_0XX [infile]"
+.LC2:
+	.string	"%d\n"
+	.text
+	.globl	main
+	.type	main, @function
+main:
+.LFB8:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	pushq	%rbx
+	subq	$136, %rsp
+	.cfi_offset 3, -24
+	movl	%edi, -132(%rbp)
+	movq	%rsi, -144(%rbp)
+	movq	%fs:40, %rax
+	movq	%rax, -24(%rbp)
+	xorl	%eax, %eax
+	movw	$25390, -27(%rbp)
+	movb	$0, -25(%rbp)
+	movl	$4000000, %edi
+	call	malloc@PLT
+	movq	%rax, -104(%rbp)
+	movl	$4000000, %edi
+	call	malloc@PLT
+	movq	%rax, -96(%rbp)
+	cmpl	$1, -132(%rbp)
+	jle	.L35
+	movq	-144(%rbp), %rax
+	addq	$8, %rax
+	movq	(%rax), %rax
+	leaq	.LC0(%rip), %rsi
+	movq	%rax, %rdi
+	call	fopen@PLT
+	movq	%rax, -112(%rbp)
+	cmpq	$0, -112(%rbp)
+	jne	.L36
+	movq	-144(%rbp), %rax
+	addq	$8, %rax
+	movq	(%rax), %rax
+	movq	%rax, %rdi
+	call	perror@PLT
+	movl	$1, %edi
+	call	exit@PLT
+.L36:
+	movq	-144(%rbp), %rax
+	addq	$8, %rax
+	movq	(%rax), %rax
+	movq	%rax, %rdi
+	call	strlen@PLT
+	movq	%rax, %rbx
+	leaq	-27(%rbp), %rax
+	movq	%rax, %rdi
+	call	strlen@PLT
+	addq	%rbx, %rax
+	addq	$1, %rax
+	movq	%rax, %rdi
+	call	malloc@PLT
+	movq	%rax, -88(%rbp)
+	movq	-144(%rbp), %rax
+	addq	$8, %rax
+	movq	(%rax), %rdx
+	movq	-88(%rbp), %rax
+	movq	%rdx, %rsi
+	movq	%rax, %rdi
+	call	strcpy@PLT
+	leaq	-27(%rbp), %rdx
+	movq	-88(%rbp), %rax
+	movq	%rdx, %rsi
+	movq	%rax, %rdi
+	call	strcat@PLT
+	movq	-88(%rbp), %rax
+	movq	%rax, %rdi
+	call	free@PLT
+	addq	$8, -144(%rbp)
+	subl	$1, -132(%rbp)
+	jmp	.L37
+.L35:
+	movq	stdin(%rip), %rax
+	movq	%rax, -112(%rbp)
+.L37:
+	cmpl	$1, -132(%rbp)
+	je	.L38
+	leaq	.LC1(%rip), %rdi
+	call	puts@PLT
+	movl	$2, %edi
+	call	exit@PLT
+.L38:
+	movq	-104(%rbp), %rdx
+	movq	-112(%rbp), %rax
+	movq	%rdx, %rsi
+	movq	%rax, %rdi
+	call	read_data
+	movq	%rax, -80(%rbp)
+	leaq	-64(%rbp), %rax
+	movl	$0, %esi
+	movq	%rax, %rdi
+	call	gettimeofday@PLT
+	movl	$0, -124(%rbp)
+	jmp	.L39
+.L40:
+	movq	-104(%rbp), %rax
+	movq	%rax, -72(%rbp)
+	movq	-80(%rbp), %rax
+	leaq	0(,%rax,8), %rdx
+	movq	-96(%rbp), %rcx
+	movq	-72(%rbp), %rax
+	movq	%rcx, %rsi
+	movq	%rax, %rdi
+	call	drop_0xx
+	movl	%eax, -120(%rbp)
+	addl	$1, -124(%rbp)
+.L39:
+	cmpl	$19, -124(%rbp)
+	jle	.L40
+	leaq	-48(%rbp), %rax
+	movl	$0, %esi
+	movq	%rax, %rdi
+	call	gettimeofday@PLT
+	movq	-48(%rbp), %rax
+	imull	$1000000, %eax, %eax
+	movq	-40(%rbp), %rdx
+	leal	(%rax,%rdx), %ecx
+	movq	-64(%rbp), %rax
+	imull	$1000000, %eax, %eax
+	movq	-56(%rbp), %rdx
+	addl	%edx, %eax
+	subl	%eax, %ecx
+	movl	%ecx, %eax
+	movl	%eax, -116(%rbp)
+	movl	-120(%rbp), %eax
+	movl	%eax, %esi
+	leaq	.LC2(%rip), %rdi
+	movl	$0, %eax
+	call	printf@PLT
+	movl	$0, %edi
+	call	exit@PLT
+	.cfi_endproc
+.LFE8:
+	.size	main, .-main
+	.ident	"GCC: (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0"
+	.section	.note.GNU-stack,"",@progbits

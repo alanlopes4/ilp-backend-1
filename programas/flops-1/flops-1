@@ -1,0 +1,424 @@
+	.file	"flops-1.c"
+	.text
+	.comm	nulltime,8,8
+	.comm	TimeArray,24,16
+	.comm	TLimit,8,8
+	.comm	T,288,32
+	.comm	sa,8,8
+	.comm	sb,8,8
+	.comm	sc,8,8
+	.comm	sd,8,8
+	.comm	one,8,8
+	.comm	two,8,8
+	.comm	three,8,8
+	.comm	four,8,8
+	.comm	five,8,8
+	.comm	piref,8,8
+	.comm	piprg,8,8
+	.comm	scale,8,8
+	.comm	pierr,8,8
+	.globl	A0
+	.data
+	.align 8
+	.type	A0, @object
+	.size	A0, 8
+A0:
+	.long	0
+	.long	1072693248
+	.globl	A1
+	.align 8
+	.type	A1, @object
+	.size	A1, 8
+A1:
+	.long	1431672581
+	.long	-1077586603
+	.globl	A2
+	.align 8
+	.type	A2, @object
+	.size	A2, 8
+A2:
+	.long	289073571
+	.long	1065423121
+	.globl	A3
+	.align 8
+	.type	A3, @object
+	.size	A3, 8
+A3:
+	.long	1068616305
+	.long	1059717536
+	.globl	A4
+	.align 8
+	.type	A4, @object
+	.size	A4, 8
+A4:
+	.long	2225747302
+	.long	1053236722
+	.globl	A5
+	.align 8
+	.type	A5, @object
+	.size	A5, 8
+A5:
+	.long	2365105190
+	.long	1046145882
+	.globl	A6
+	.align 8
+	.type	A6, @object
+	.size	A6, 8
+A6:
+	.long	1378468262
+	.long	1038519799
+	.globl	B0
+	.align 8
+	.type	B0, @object
+	.size	B0, 8
+B0:
+	.long	0
+	.long	1072693248
+	.globl	B1
+	.align 8
+	.type	B1, @object
+	.size	B1, 8
+B1:
+	.long	4294934870
+	.long	-1075838977
+	.globl	B2
+	.align 8
+	.type	B2, @object
+	.size	B2, 8
+B2:
+	.long	1428750884
+	.long	1067799893
+	.globl	B3
+	.align 8
+	.type	B3, @object
+	.size	B3, 8
+B3:
+	.long	4293354774
+	.long	-1084833429
+	.globl	B4
+	.align 8
+	.type	B4, @object
+	.size	B4, 8
+B4:
+	.long	673459639
+	.long	1056571797
+	.globl	B5
+	.align 8
+	.type	B5, @object
+	.size	B5, 8
+B5:
+	.long	3565017998
+	.long	-1097696333
+	.globl	B6
+	.align 8
+	.type	B6, @object
+	.size	B6, 8
+B6:
+	.long	1977554986
+	.long	1042372530
+	.globl	C0
+	.align 8
+	.type	C0, @object
+	.size	C0, 8
+C0:
+	.long	0
+	.long	1072693248
+	.globl	C1
+	.align 8
+	.type	C1, @object
+	.size	C1, 8
+C1:
+	.long	4265063394
+	.long	1072693247
+	.globl	C2
+	.align 8
+	.type	C2, @object
+	.size	C2, 8
+C2:
+	.long	3425412280
+	.long	1071644671
+	.globl	C3
+	.align 8
+	.type	C3, @object
+	.size	C3, 8
+C3:
+	.long	2085054741
+	.long	1069897048
+	.globl	C4
+	.align 8
+	.type	C4, @object
+	.size	C4, 8
+C4:
+	.long	2121880904
+	.long	1067799899
+	.globl	C5
+	.align 8
+	.type	C5, @object
+	.size	C5, 8
+C5:
+	.long	1255739916
+	.long	1065422234
+	.globl	C6
+	.align 8
+	.type	C6, @object
+	.size	C6, 8
+C6:
+	.long	2128317445
+	.long	1062671128
+	.globl	C7
+	.align 8
+	.type	C7, @object
+	.size	C7, 8
+C7:
+	.long	3356966714
+	.long	1059504247
+	.globl	C8
+	.align 8
+	.type	C8, @object
+	.size	C8, 8
+C8:
+	.long	4261720527
+	.long	1057266947
+	.globl	D1
+	.align 8
+	.type	D1, @object
+	.size	D1, 8
+D1:
+	.long	1125352308
+	.long	1067743969
+	.globl	D2
+	.align 8
+	.type	D2, @object
+	.size	D2, 8
+D2:
+	.long	1297423721
+	.long	1062171920
+	.globl	D3
+	.align 8
+	.type	D3, @object
+	.size	D3, 8
+D3:
+	.long	267691816
+	.long	1052029018
+	.globl	E2
+	.align 8
+	.type	E2, @object
+	.size	E2, 8
+E2:
+	.long	1297423721
+	.long	1061123344
+	.globl	E3
+	.align 8
+	.type	E3, @object
+	.size	E3, 8
+E3:
+	.long	1788578186
+	.long	1050383821
+	.section	.rodata
+	.align 8
+.LC0:
+	.string	"   FLOPS C Program (Double Precision), V2.0 18 Dec 1992\n"
+	.align 8
+.LC8:
+	.string	"   Module     Error        RunTime      MFLOPS"
+	.align 8
+.LC9:
+	.string	"                            (usec)"
+	.align 8
+.LC13:
+	.string	"     1   %13.4lf  %10.4lf  %10.4lf\n"
+	.text
+	.globl	main
+	.type	main, @function
+main:
+.LFB0:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	pushq	%r12
+	pushq	%rbx
+	subq	$64, %rsp
+	.cfi_offset 12, -24
+	.cfi_offset 3, -32
+	movl	$10, %edi
+	call	putchar@PLT
+	leaq	.LC0(%rip), %rdi
+	call	puts@PLT
+	movq	$15625, -56(%rbp)
+	cvtsi2sdq	-56(%rbp), %xmm0
+	movsd	.LC1(%rip), %xmm1
+	divsd	%xmm0, %xmm1
+	movapd	%xmm1, %xmm0
+	movsd	%xmm0, 8+T(%rip)
+	movsd	.LC2(%rip), %xmm0
+	movsd	%xmm0, TLimit(%rip)
+	movq	$512000000, -48(%rbp)
+	movsd	.LC3(%rip), %xmm0
+	movsd	%xmm0, piref(%rip)
+	movsd	.LC2(%rip), %xmm0
+	movsd	%xmm0, one(%rip)
+	movsd	.LC4(%rip), %xmm0
+	movsd	%xmm0, two(%rip)
+	movsd	.LC5(%rip), %xmm0
+	movsd	%xmm0, three(%rip)
+	movsd	.LC6(%rip), %xmm0
+	movsd	%xmm0, four(%rip)
+	movsd	.LC7(%rip), %xmm0
+	movsd	%xmm0, five(%rip)
+	movsd	one(%rip), %xmm0
+	movsd	%xmm0, scale(%rip)
+	leaq	.LC8(%rip), %rdi
+	call	puts@PLT
+	leaq	.LC9(%rip), %rdi
+	call	puts@PLT
+	movq	-56(%rbp), %rax
+	imulq	$10000, %rax, %rbx
+	pxor	%xmm0, %xmm0
+	movsd	%xmm0, sa(%rip)
+	addq	%rbx, %rbx
+	movsd	one(%rip), %xmm1
+	cvtsi2sdq	%rbx, %xmm0
+	divsd	%xmm0, %xmm1
+	movapd	%xmm1, %xmm0
+	movsd	%xmm0, -40(%rbp)
+	pxor	%xmm0, %xmm0
+	movsd	%xmm0, -72(%rbp)
+	pxor	%xmm0, %xmm0
+	movsd	%xmm0, -64(%rbp)
+	movsd	one(%rip), %xmm0
+	movsd	%xmm0, -32(%rbp)
+	movl	$1, %r12d
+	jmp	.L2
+.L3:
+	movsd	-64(%rbp), %xmm0
+	addsd	-32(%rbp), %xmm0
+	movsd	%xmm0, -64(%rbp)
+	movsd	-64(%rbp), %xmm0
+	mulsd	-40(%rbp), %xmm0
+	movsd	%xmm0, -24(%rbp)
+	movsd	D3(%rip), %xmm0
+	mulsd	-24(%rbp), %xmm0
+	movsd	D2(%rip), %xmm1
+	addsd	%xmm1, %xmm0
+	mulsd	-24(%rbp), %xmm0
+	movsd	D1(%rip), %xmm1
+	addsd	%xmm1, %xmm0
+	movsd	E3(%rip), %xmm1
+	mulsd	-24(%rbp), %xmm1
+	movsd	E2(%rip), %xmm2
+	addsd	%xmm2, %xmm1
+	mulsd	-24(%rbp), %xmm1
+	movsd	D1(%rip), %xmm2
+	addsd	%xmm2, %xmm1
+	mulsd	-24(%rbp), %xmm1
+	addsd	-32(%rbp), %xmm1
+	divsd	%xmm1, %xmm0
+	movsd	-72(%rbp), %xmm1
+	addsd	%xmm1, %xmm0
+	movsd	%xmm0, -72(%rbp)
+	addq	$1, %r12
+.L2:
+	leaq	-1(%rbx), %rax
+	cmpq	%rax, %r12
+	jle	.L3
+	movsd	D1(%rip), %xmm1
+	movsd	D2(%rip), %xmm0
+	addsd	%xmm1, %xmm0
+	movsd	D3(%rip), %xmm1
+	addsd	%xmm1, %xmm0
+	movsd	one(%rip), %xmm2
+	movsd	D1(%rip), %xmm1
+	addsd	%xmm2, %xmm1
+	movsd	E2(%rip), %xmm2
+	addsd	%xmm2, %xmm1
+	movsd	E3(%rip), %xmm2
+	addsd	%xmm2, %xmm1
+	divsd	%xmm1, %xmm0
+	movsd	%xmm0, sa(%rip)
+	movsd	D1(%rip), %xmm0
+	movsd	%xmm0, sb(%rip)
+	movsd	sa(%rip), %xmm1
+	movsd	sb(%rip), %xmm0
+	addsd	%xmm0, %xmm1
+	movsd	two(%rip), %xmm0
+	mulsd	-72(%rbp), %xmm0
+	addsd	%xmm1, %xmm0
+	mulsd	-40(%rbp), %xmm0
+	movsd	two(%rip), %xmm1
+	divsd	%xmm1, %xmm0
+	movsd	%xmm0, sa(%rip)
+	movsd	one(%rip), %xmm0
+	movsd	sa(%rip), %xmm1
+	divsd	%xmm1, %xmm0
+	movsd	%xmm0, sb(%rip)
+	movsd	sb(%rip), %xmm0
+	cvttsd2siq	%xmm0, %rax
+	imulq	$40000, %rax, %rax
+	cvtsi2sdq	%rax, %xmm0
+	movsd	scale(%rip), %xmm1
+	divsd	%xmm1, %xmm0
+	cvttsd2siq	%xmm0, %rbx
+	movsd	sb(%rip), %xmm0
+	movsd	.LC11(%rip), %xmm1
+	subsd	%xmm1, %xmm0
+	movsd	%xmm0, sc(%rip)
+	movsd	sc(%rip), %xmm1
+	movsd	.LC12(%rip), %xmm0
+	mulsd	%xmm1, %xmm0
+	pxor	%xmm2, %xmm2
+	pxor	%xmm1, %xmm1
+	leaq	.LC13(%rip), %rdi
+	movl	$3, %eax
+	call	printf@PLT
+	movl	$0, %eax
+	addq	$64, %rsp
+	popq	%rbx
+	popq	%r12
+	popq	%rbp
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE0:
+	.size	main, .-main
+	.section	.rodata
+	.align 8
+.LC1:
+	.long	0
+	.long	1093567616
+	.align 8
+.LC2:
+	.long	0
+	.long	1072693248
+	.align 8
+.LC3:
+	.long	1413754136
+	.long	1074340347
+	.align 8
+.LC4:
+	.long	0
+	.long	1073741824
+	.align 8
+.LC5:
+	.long	0
+	.long	1074266112
+	.align 8
+.LC6:
+	.long	0
+	.long	1074790400
+	.align 8
+.LC7:
+	.long	0
+	.long	1075052544
+	.align 8
+.LC11:
+	.long	858993459
+	.long	1077490483
+	.align 8
+.LC12:
+	.long	4276863648
+	.long	968116299
+	.ident	"GCC: (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0"
+	.section	.note.GNU-stack,"",@progbits

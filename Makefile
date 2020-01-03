@@ -1,4 +1,3 @@
-
 PLUGIN=plugin_alan.so
 SOURCES=\
         plugin_alan.cc \
@@ -7,5 +6,9 @@ SOURCES=\
 include ../Makefile.common
 
 .PHONY: test
+
 test: $(PLUGIN)
-	$(CCPLUGIN) -c -o /dev/null test.c
+	$(CCPLUGIN) -c -o -w -I$(DEP) /dev/null $(PROGRAMA) 
+
+
+
